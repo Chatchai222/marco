@@ -2,13 +2,21 @@ package com.example.marco.location;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LocationService {
+
+    private final LocationRepository locationRepository;
     
+    @Autowired
+    public LocationService(LocationRepository inLocationRepository){
+        this.locationRepository = inLocationRepository;
+    }
+
     public List<Location> getAllLocation(){
-        return List.of( new Location(1L, "ECC804", "Eighth floor", 34.23, 27) );
+        return this.locationRepository.findAll();
     }
 
 }
