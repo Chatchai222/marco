@@ -19,17 +19,17 @@ public class BeaconController {
         this.beacon_service = in_beacon_service;
     }
 
-    @GetMapping("all/")
+    @GetMapping("all")
     public List<Beacon> getAllBeacon(){
         return this.beacon_service.getAllBeacon();
     }
 
-    @GetMapping("id/")
+    @GetMapping("id")
     public Beacon getBeaconById(@RequestParam(name = "id") Long beacon_id){
         return this.beacon_service.getBeaconById(beacon_id);
     }
 
-    @GetMapping("mac_address/")
+    @GetMapping("mac_address")
     public Beacon getBeaconByMacAddress(@RequestParam(name = "mac_address") String mac_address){
         return this.beacon_service.getBeaconByMacAddress(mac_address);
     }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,13 +20,13 @@ public class LocationController {
         this.locationService = in_location_service;
     }
 
-    @GetMapping
+    @GetMapping("all")
     public List<Location> getAllLocation() {
         return locationService.getAllLocation();
     }
 
-    @GetMapping("/{location_id}")
-    public Location getLocationById(@PathVariable Long location_id){
+    @GetMapping("id")
+    public Location getLocationById(@RequestParam(name = "id") Long location_id){
         return locationService.getLocationById(location_id);
     }
 }
