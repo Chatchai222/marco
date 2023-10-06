@@ -47,5 +47,13 @@ public class BeaconService {
         }
         this.beaconRepository.save(beacon);
     }
+
+    public void deleteBeaconById(Long beaconId) {
+        Boolean exists = this.beaconRepository.existsById(beaconId);
+        if(!exists){
+            throw new IllegalStateException("beacon with id " + beaconId + " does not exist");
+        }
+        this.beaconRepository.deleteById(beaconId);
+    }
     
 }
