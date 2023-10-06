@@ -28,4 +28,8 @@ public class LocationService {
         return opt_location.get();
     }
 
+    public void addLocation(Location location) {
+        this.location_repository.save(location);
+    }
+
 }

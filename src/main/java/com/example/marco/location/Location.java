@@ -23,7 +23,7 @@ public class Location {
     )
     private Long id;
 
-    private String location_name;
+    private String name;
     private String floor_name;
     private double x_coord;
     private double y_coord;
@@ -33,7 +33,7 @@ public class Location {
     }
 
     public Location(String name, String floor_name, double x_coord, double y_coord) {
-        this.location_name = name;
+        this.name = name;
         this.floor_name = floor_name;
         this.x_coord = x_coord;
         this.y_coord = y_coord;
@@ -41,7 +41,7 @@ public class Location {
 
     public Location(Long id, String name, String floor_name, double x_coord, double y_coord) {
         this.id = id;
-        this.location_name = name;
+        this.name = name;
         this.floor_name = floor_name;
         this.x_coord = x_coord;
         this.y_coord = y_coord;
@@ -49,7 +49,7 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location [id=" + id + ", name=" + location_name + ", floor_name=" + floor_name + ", x_coord=" + x_coord
+        return "Location [id=" + id + ", name=" + name + ", floor_name=" + floor_name + ", x_coord=" + x_coord
                 + ", y_coord=" + y_coord + "]";
     }
 
@@ -61,12 +61,12 @@ public class Location {
         this.id = id;
     }
 
-    public String getLocation_name() {
-        return location_name;
+    public String getName() {
+        return name;
     }
 
-    public void setLocation_name(String location_name) {
-        this.location_name = location_name;
+    public void setName(String location_name) {
+        this.name = location_name;
     }
 
     public String getFloor_name() {
