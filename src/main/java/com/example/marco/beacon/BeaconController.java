@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,26 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/beacon")
 public class BeaconController {
     
-    final private BeaconService beacon_service;
+    final private BeaconService beaconService;
 
     @Autowired
-    public BeaconController(BeaconService in_beacon_service){
-        this.beacon_service = in_beacon_service;
+    public BeaconController(BeaconService beaconService){
+        this.beaconService = beaconService;
     }
 
     @GetMapping("all")
     public List<Beacon> getAllBeacon(){
-        return this.beacon_service.getAllBeacon();
+        return this.beaconService.getAllBeacon();
     }
 
     @GetMapping("id")
-    public Beacon getBeaconById(@RequestParam(name = "id") Long beacon_id){
-        return this.beacon_service.getBeaconById(beacon_id);
+    public Beacon getBeaconById(@RequestParam(name = "id") Long beaconId){
+        return this.beaconService.getBeaconById(beaconId);
     }
 
-    @GetMapping("mac_address")
-    public Beacon getBeaconByMacAddress(@RequestParam(name = "mac_address") String mac_address){
-        return this.beacon_service.getBeaconByMacAddress(mac_address);
+    @GetMapping("macAddress")
+    public Beacon getBeaconByMacAddress(@RequestParam(name = "macAddress") String macAddress){
+        return this.beaconService.getBeaconByMacAddress(macAddress);
+    }
+
+    @PostMapping
+    public void addBeacon(@RequestBody Beacon beacon){
+        this.beaconService.addBeacon(beacon);
     }
 
 }

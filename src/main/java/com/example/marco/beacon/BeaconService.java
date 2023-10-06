@@ -9,31 +9,43 @@ import org.springframework.stereotype.Service;
 @Service
 public class BeaconService {
     
-    final private BeaconRepository beacon_repository;
+    final private BeaconRepository beaconRepository;
     
     @Autowired
-    public BeaconService(BeaconRepository in_beacon_repository){
-        this.beacon_repository = in_beacon_repository;
+    public BeaconService(BeaconRepository beaconRepository){
+        this.beaconRepository = beaconRepository;
     }
     
     public List<Beacon> getAllBeacon(){
-        return this.beacon_repository.findAll();
+        return this.beaconRepository.findAll();
     }
 
-    public Beacon getBeaconById(Long beacon_id){
-        Optional<Beacon> beacon_optional = this.beacon_repository.findById(beacon_id);
-        if (!beacon_optional.isPresent()){
-            throw new IllegalStateException("Beacon with id: " + beacon_id + " does not exist");
+    public Beacon getBeaconById(Long beaconId){
+        Optional<Beacon> beaconOpt = this.beaconRepository.findById(beaconId);
+        if (!beaconOpt.isPresent()){
+            throw new IllegalStateException("Beacon with id: " + beaconId + " does not exist");
         }
-        return beacon_optional.get();
+        return beaconOpt.get();
     }
 
-    public Beacon getBeaconByMacAddress(String mac_address){
-        Optional<Beacon> beacon_optional = this.beacon_repository.findByMacAddress(mac_address);
-        if (!beacon_optional.isPresent()){
-            throw new IllegalStateException("Beacon with mac address: " + mac_address + " does not exist");
+    public Beacon getBeaconByMacAddress(String macAddress){
+        Optional<Beacon> beaconOpt = this.beaconRepository.findByMacAddress(macAddress);
+        if (!beaconOpt.isPresent()){
+            throw new IllegalStateException("Beacon with mac address: " + macAddress + " does not exist");
         }
-        return beacon_optional.get();
+        return beaconOpt.get();
+    }
+
+    public void addBeacon(Beacon beacon){
+        if(beacon.isAnyNonIdAttributeNull()){
+            throw new IllegalStateException("Cannot add beacon, the following attribute " + beacon.getNullAttributes() + " is null");
+        }
+
+        Optional<Beacon> beaconOpt = this.beaconRepository.findByMacAddress(beacon.getMacAddress());
+        if(beaconOpt.isPresent()){
+            throw new IllegalStateException("beacon with mac address " + beacon.getMacAddress() + " already exists");
+        }
+        this.beaconRepository.save(beacon);
     }
     
 }
