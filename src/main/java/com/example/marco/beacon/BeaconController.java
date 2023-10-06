@@ -47,5 +47,10 @@ public class BeaconController {
         this.beaconService.deleteBeaconById(beaconId);
     }
 
+    @DeleteMapping("macAddress")
+    public void deleteBeaconByMacAddress(@RequestParam(name = "macAddress") String macAddress){
+        this.beaconService.deleteBeaconByMacAddress(macAddress);
+    }
+
 
 }

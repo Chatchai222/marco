@@ -55,5 +55,17 @@ public class BeaconService {
         }
         this.beaconRepository.deleteById(beaconId);
     }
+
+    public void deleteBeaconByMacAddress(String macAddress) {
+        Optional<Beacon> beaconOpt = this.beaconRepository.findByMacAddress(macAddress);
+        if(!beaconOpt.isPresent()){
+            throw new IllegalStateException("beacon with mac address " + macAddress + " does not exist");
+        }
+        Beacon beacon = beaconOpt.get();
+        this.beaconRepository.deleteById(beacon.getId());
+    }
+    
+
+    
     
 }
