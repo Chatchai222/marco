@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class LocationService {
 
@@ -38,6 +40,16 @@ public class LocationService {
             throw new IllegalStateException("Location with id: " + location_id + " does not exist");
         }
         this.location_repository.deleteById(location_id);
+    }
+
+    public void replaceLocation(Location in_location){
+        if(in_location.getId() == null){
+            throw new IllegalStateException("Id of location cannot be null");
+        }
+        if(!this.location_repository.existsById(in_location.getId())){
+            throw new IllegalStateException("Id of location " + in_location.getId() + " does not exist");
+        }
+        this.location_repository.save(in_location);
     }
 
 }
