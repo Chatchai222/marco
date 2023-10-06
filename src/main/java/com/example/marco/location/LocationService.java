@@ -32,4 +32,12 @@ public class LocationService {
         this.location_repository.save(location);
     }
 
+    public void deleteLocationById(Long location_id){
+        boolean location_exist = this.location_repository.existsById(location_id);
+        if (!location_exist){
+            throw new IllegalStateException("Location with id: " + location_id + " does not exist");
+        }
+        this.location_repository.deleteById(location_id);
+    }
+
 }

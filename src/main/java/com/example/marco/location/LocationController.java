@@ -3,6 +3,7 @@ package com.example.marco.location;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,5 +36,10 @@ public class LocationController {
     @PostMapping
     public void addLocation(@RequestBody Location location){
         location_service.addLocation(location);
-    }   
+    }
+    
+    @DeleteMapping("id")
+    public void deleteLocationById(@RequestParam(name = "id") Long location_id){
+        location_service.deleteLocationById(location_id);
+    }
 }
