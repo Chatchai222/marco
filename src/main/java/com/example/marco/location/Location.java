@@ -13,44 +13,38 @@ public class Location {
 
     @Id
     @SequenceGenerator(
-        name = "location_sequence",
-        sequenceName = "location_sequence",
+        name = "locationSequence",
+        sequenceName = "locationSequence",
         allocationSize = 1
     )
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
-        generator = "location_sequence"
+        generator = "locationSequence"
     )
     private Long id;
 
     private String name;
-    private String floor_name;
-    private double x_coord;
-    private double y_coord;
+    private String floorName;
+    private double x;
+    private double y;
 
     public Location(){
 
     }
 
-    public Location(String name, String floor_name, double x_coord, double y_coord) {
+    public Location(String name, String floor_name, double x, double y) {
         this.name = name;
-        this.floor_name = floor_name;
-        this.x_coord = x_coord;
-        this.y_coord = y_coord;
+        this.floorName = floor_name;
+        this.x = x;
+        this.y = y;
     }
 
-    public Location(Long id, String name, String floor_name, double x_coord, double y_coord) {
+    public Location(Long id, String name, String floorName, double x, double y) {
         this.id = id;
         this.name = name;
-        this.floor_name = floor_name;
-        this.x_coord = x_coord;
-        this.y_coord = y_coord;
-    }
-
-    @Override
-    public String toString() {
-        return "Location [id=" + id + ", name=" + name + ", floor_name=" + floor_name + ", x_coord=" + x_coord
-                + ", y_coord=" + y_coord + "]";
+        this.floorName = floorName;
+        this.x = x;
+        this.y = y;
     }
 
     public Long getId() {
@@ -69,30 +63,28 @@ public class Location {
         this.name = location_name;
     }
 
-    public String getFloor_name() {
-        return floor_name;
+    public String getFloorName() {
+        return floorName;
     }
 
-    public void setFloor_name(String floor_name) {
-        this.floor_name = floor_name;
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
     }
 
-    public double getX_coord() {
-        return x_coord;
+    public double getX() {
+        return x;
     }
 
-    public void setX_coord(double x_coord) {
-        this.x_coord = x_coord;
+    public void setX(double x_coord) {
+        this.x = x_coord;
     }
 
-    public double getY_coord() {
-        return y_coord;
+    public double getY() {
+        return y;
     }
 
-    public void setY_coord(double y_coord) {
-        this.y_coord = y_coord;
+    public void setY(double y_coord) {
+        this.y = y_coord;
     }
-    
-    
 
 }

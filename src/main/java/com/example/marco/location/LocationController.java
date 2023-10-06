@@ -16,35 +16,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "api/v1/location")
 public class LocationController {
 
-    private final LocationService location_service;
+    private final LocationService locationService;
     
     @Autowired
-    public LocationController(LocationService in_location_service){
-        this.location_service = in_location_service;
+    public LocationController(LocationService inLocationService){
+        this.locationService = inLocationService;
     }
 
     @GetMapping("all")
     public List<Location> getAllLocation() {
-        return location_service.getAllLocation();
+        return locationService.getAllLocation();
     }
 
     @GetMapping("id")
-    public Location getLocationById(@RequestParam(name = "id") Long location_id){
-        return location_service.getLocationById(location_id);
+    public Location getLocationById(@RequestParam(name = "id") Long locationId){
+        return locationService.getLocationById(locationId);
     }
 
     @PostMapping
     public void addLocation(@RequestBody Location location){
-        location_service.addLocation(location);
+        locationService.addLocation(location);
     }
     
     @DeleteMapping("id")
-    public void deleteLocationById(@RequestParam(name = "id") Long location_id){
-        location_service.deleteLocationById(location_id);
+    public void deleteLocationById(@RequestParam(name = "id") Long locationId){
+        locationService.deleteLocationById(locationId);
     }
 
     @PutMapping
     public void replaceLocation(@RequestBody Location location){
-        location_service.replaceLocation(location);
+        locationService.replaceLocation(location);
     }
 }

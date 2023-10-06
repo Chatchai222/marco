@@ -10,45 +10,45 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocationService {
 
-    private final LocationRepository location_repository;
+    private final LocationRepository locationRepository;
     
     @Autowired
-    public LocationService(LocationRepository in_location_repository){
-        this.location_repository = in_location_repository;
+    public LocationService(LocationRepository inLocationRepository){
+        this.locationRepository = inLocationRepository;
     }
 
     public List<Location> getAllLocation(){
-        return this.location_repository.findAll();
+        return this.locationRepository.findAll();
     }
 
-    public Location getLocationById(Long location_id){
-        Optional<Location> opt_location = this.location_repository.findById(location_id);
-        if (!opt_location.isPresent()){
-            throw new IllegalStateException("Location with id: " + location_id + " does not exist");
+    public Location getLocationById(Long locationId){
+        Optional<Location> locationOpt = this.locationRepository.findById(locationId);
+        if (!locationOpt.isPresent()){
+            throw new IllegalStateException("Location with id: " + locationId + " does not exist");
         }
-        return opt_location.get();
+        return locationOpt.get();
     }
 
     public void addLocation(Location location) {
-        this.location_repository.save(location);
+        this.locationRepository.save(location);
     }
 
-    public void deleteLocationById(Long location_id){
-        boolean location_exist = this.location_repository.existsById(location_id);
-        if (!location_exist){
-            throw new IllegalStateException("Location with id: " + location_id + " does not exist");
+    public void deleteLocationById(Long locationId){
+        boolean locationExist = this.locationRepository.existsById(locationId);
+        if (!locationExist){
+            throw new IllegalStateException("Location with id: " + locationId + " does not exist");
         }
-        this.location_repository.deleteById(location_id);
+        this.locationRepository.deleteById(locationId);
     }
 
-    public void replaceLocation(Location in_location){
-        if(in_location.getId() == null){
+    public void replaceLocation(Location inLocation){
+        if(inLocation.getId() == null){
             throw new IllegalStateException("Id of location cannot be null");
         }
-        if(!this.location_repository.existsById(in_location.getId())){
-            throw new IllegalStateException("Id of location " + in_location.getId() + " does not exist");
+        if(!this.locationRepository.existsById(inLocation.getId())){
+            throw new IllegalStateException("Id of location " + inLocation.getId() + " does not exist");
         }
-        this.location_repository.save(in_location);
+        this.locationRepository.save(inLocation);
     }
 
 }

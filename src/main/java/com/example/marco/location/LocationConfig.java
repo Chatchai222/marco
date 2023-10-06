@@ -12,10 +12,10 @@ public class LocationConfig {
     @Bean
     public CommandLineRunner LocationCommandLineRunner(LocationRepository repository) {
         return args -> {
-            Location ecc_804 = new Location("ECC804", "8th floor", 23.4, 24.2);
-            Location prof_pipat_office = new Location("Prof Pipat Office", "8th floor", 32.4, 25.5);
+            Location ecc804 = new Location("ECC804", "8th floor", 23.4, 24.2);
+            Location profPipatOffice = new Location("Prof Pipat Office", "8th floor", 32.4, 25.5);
             
-            repository.saveAll(List.of(ecc_804, prof_pipat_office));
+            repository.saveAll(List.of(ecc804, profPipatOffice));
         };
     }
 
