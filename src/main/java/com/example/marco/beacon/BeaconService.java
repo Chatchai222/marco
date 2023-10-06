@@ -64,8 +64,16 @@ public class BeaconService {
         Beacon beacon = beaconOpt.get();
         this.beaconRepository.deleteById(beacon.getId());
     }
-    
 
-    
-    
+    public void replaceBeacon(Beacon inBeacon) {
+        if(inBeacon.isAnyAttributeNull()){
+            throw new IllegalStateException("beacon replacement is missing " + inBeacon.getNullAttributes() + " attributes");
+        }
+        Optional<Beacon> beaconOpt = this.beaconRepository.findById(inBeacon.getId());
+        if(!beaconOpt.isPresent()){
+            throw new IllegalStateException("beacon with id " + inBeacon.getId() + " does not exist");
+        }
+        this.beaconRepository.save(inBeacon);
+    }
+
 }
