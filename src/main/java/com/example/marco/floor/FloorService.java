@@ -23,4 +23,7 @@ public class FloorService {
         this.floorRepository.save(floor);
     }
 
+    public void replaceFloor(Floor floor) {
+    }
+
 }
