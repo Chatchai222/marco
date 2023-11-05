@@ -13,37 +13,37 @@ public class Floor {
 
     @Id
     @SequenceGenerator(
-        name = "beaconSequence",
-        sequenceName = "beaconSequence",
+        name = "floorSequence",
+        sequenceName = "floorSequence",
         allocationSize = 1
     )
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
-        generator = "beaconSequence"
+        generator = "floorSequence"
     )
     private Long id;
     private String name;
     private Double length;
     private Double width;
-    private Double aziumuth;
+    private Double azimuth;
 
     public Floor() {
 
     }
 
-    public Floor(String name, Double length, Double width, Double aziumuth) {
+    public Floor(String name, Double length, Double width, Double azimuth) {
         this.name = name;
         this.length = length;
         this.width = width;
-        this.aziumuth = aziumuth;
+        this.azimuth = azimuth;
     }
 
-    public Floor(Long id, String name, Double length, Double width, Double aziumuth) {
+    public Floor(Long id, String name, Double length, Double width, Double azimuth) {
         this.id = id;
         this.name = name;
         this.length = length;
         this.width = width;
-        this.aziumuth = aziumuth;
+        this.azimuth = azimuth;
     }
 
     public Long getId() {
@@ -78,18 +78,18 @@ public class Floor {
         this.width = width;
     }
 
-    public Double getAziumuth() {
-        return aziumuth;
+    public Double getAzimuth() {
+        return azimuth;
     }
 
-    public void setAziumuth(Double aziumuth) {
-        this.aziumuth = aziumuth;
+    public void setAzimuth(Double azimuth) {
+        this.azimuth = azimuth;
     }
    
     @Override
     public String toString() {
         return "Floor [id=" + id + ", name=" + name + ", length=" + length + ", width=" + width + ", aziumuth="
-                + aziumuth + "]";
+                + azimuth + "]";
     }
     
 }
