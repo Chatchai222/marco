@@ -34,9 +34,16 @@ public class FloorService {
 
     public void replaceFloor(Floor floor) {
         if(floor.getId() == null){
-            throw new IllegalStateException("Error: Floor does not have ID");
+            throw new IllegalStateException("Error: Floor with id:" + floor.getId() + " does not exist");
         }
         this.floorRepository.save(floor);
+    }
+
+    public void deleteFloorById(Long floorId){
+        if(!floorRepository.existsById(floorId)){
+            throw new IllegalStateException("Error: Floor with id: " + floorId + " does not exist");
+        }
+        this.floorRepository.deleteById(floorId);
     }
 
 }
