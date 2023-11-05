@@ -19,4 +19,8 @@ public class FloorService {
         return this.floorRepository.findAll();
     }
 
+    public void addFloor(Floor floor) {
+        this.floorRepository.save(floor);
+    }
+
 }
