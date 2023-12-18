@@ -50,4 +50,12 @@ public class FileService {
 
         fileRepository.save(fileEntity);
     }
+
+    public void deleteFile(Long id) throws Exception {
+        if (fileRepository.existsById(id)){
+            fileRepository.deleteById(id);
+        } else {
+            throw new Exception("Cannot delete file with id: " + id + " since file does not exist");
+        }
+    }
 }
