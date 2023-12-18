@@ -53,7 +53,7 @@ public class FilesController {
     private FileResponse mapToFileResponse(FileEntity fileEntity){
         String downloadURL = ServletUriComponentsBuilder.fromCurrentContextPath()
                                                         .path("/files/")
-                                                        .path(fileEntity.getId())
+                                                        .path(fileEntity.getId().toString())
                                                         .toUriString();
         FileResponse fileResponse = new FileResponse();
         fileResponse.setId(fileEntity.getId());
@@ -66,7 +66,7 @@ public class FilesController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String id){
+    public ResponseEntity<byte[]> getFile(@PathVariable Long id){
         Optional<FileEntity> fileEntityOptional = fileService.getFile(id);
 
         if(!fileEntityOptional.isPresent()){

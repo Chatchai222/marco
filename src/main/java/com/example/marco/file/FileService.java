@@ -29,7 +29,7 @@ public class FileService {
         fileRepository.save(fileEntity);
     }
 
-    public Optional<FileEntity> getFile(String id){
+    public Optional<FileEntity> getFile(Long id){
         return fileRepository.findById(id);
     }
 
