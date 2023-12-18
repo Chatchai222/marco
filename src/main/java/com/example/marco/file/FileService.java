@@ -36,4 +36,18 @@ public class FileService {
     public List<FileEntity> getAllFiles(){
         return fileRepository.findAll();
     }
+
+    public void replace(Long id, MultipartFile file) throws IOException {
+        Optional<FileEntity> fileEntityOption = fileRepository.findById(id);
+        if(!fileEntityOption.isPresent()){
+            throw new IOException();
+        }
+        FileEntity fileEntity = fileEntityOption.get();
+        fileEntity.setName(StringUtils.cleanPath(file.getOriginalFilename()));
+        fileEntity.setContentType(file.getContentType());
+        fileEntity.setData(file.getBytes());
+        fileEntity.setSize(file.getSize());
+
+        fileRepository.save(fileEntity);
+    }
 }
