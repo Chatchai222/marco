@@ -1,10 +1,12 @@
 package com.example.marco.file;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,8 +47,7 @@ public class FilesController {
         Optional<FileEntity> fileEntityOptional = fileService.getFile(id);
 
         if(!fileEntityOptional.isPresent()){
-            return ResponseEntity.notFound()
-                                 .build();
+            return ResponseEntity.notFound().build();
         }
 
         FileEntity fileEntity = fileEntityOptional.get();
@@ -55,7 +56,22 @@ public class FilesController {
                              .contentType(MediaType.valueOf(fileEntity.getContentType()))
                              .body(fileEntity.getData());
 
-    }                 
+    }
+    
+    @GetMapping("view/{id}")
+    public ResponseEntity<InputStreamResource> viewFile(@PathVariable Long id) {
+        Optional<FileEntity> fileEntityOptional = fileService.getFile(id);
+
+        if(!fileEntityOptional.isPresent()){
+            return ResponseEntity.notFound().build();
+        }
+
+        FileEntity fileEntity = fileEntityOptional.get();
+        return ResponseEntity.ok()          // THE F***ING header parameter (inline vs attachment) dictate whether file is display or download
+                             .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileEntity.getName() + "\"")
+                             .contentType(MediaType.valueOf(fileEntity.getContentType()))
+                             .body(new InputStreamResource(new ByteArrayInputStream(fileEntity.getData())));
+    }
 
     @PostMapping
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
