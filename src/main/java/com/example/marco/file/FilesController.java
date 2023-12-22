@@ -43,7 +43,7 @@ public class FilesController {
     }
 
     @GetMapping("download/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable Long id){
+    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable Long id){
         Optional<FileEntity> fileEntityOptional = fileService.getFile(id);
 
         if(!fileEntityOptional.isPresent()){
@@ -54,7 +54,7 @@ public class FilesController {
         return ResponseEntity.ok()
                              .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getName() + "\"")
                              .contentType(MediaType.valueOf(fileEntity.getContentType()))
-                             .body(fileEntity.getData());
+                             .body(new InputStreamResource( new ByteArrayInputStream(fileEntity.getData())));
 
     }
     
@@ -87,17 +87,22 @@ public class FilesController {
 
     private FileResponse mapToFileResponse(FileEntity fileEntity){
         String downloadURL = MvcUriComponentsBuilder.fromMethodName(FilesController.class,
-                                                                    "getFile",
+                                                                    "downloadFile",
                                                                     fileEntity.getId())
                                                                     .build()
                                                                     .toUriString();
-
+        String viewUrl = MvcUriComponentsBuilder.fromMethodName(FilesController.class,
+                                                                "viewFile",
+                                                                fileEntity.getId())
+                                                                .build()
+                                                                .toUriString();
         FileResponse fileResponse = new FileResponse();
         fileResponse.setId(fileEntity.getId());
         fileResponse.setName(fileEntity.getName());
         fileResponse.setContentType(fileEntity.getContentType());
         fileResponse.setSize(fileEntity.getSize());
-        fileResponse.setUrl(downloadURL);
+        fileResponse.setDownloadUrl(downloadURL);
+        fileResponse.setViewUrl(viewUrl);
 
         return fileResponse;
     }
