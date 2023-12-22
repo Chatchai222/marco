@@ -1,6 +1,5 @@
 package com.example.marco.file;
 
-import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
