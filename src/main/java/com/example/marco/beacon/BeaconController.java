@@ -1,7 +1,10 @@
 package com.example.marco.beacon;
 
 import java.util.List;
+import java.util.Map;
 
+import com.example.marco.beacon.calibration.BeaconCalibrationInfo;
+import com.example.marco.beacon.calibration.CalibrationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,6 +59,11 @@ public class BeaconController {
     @PutMapping
     public void replaceLocation(@RequestBody Beacon beacon){
         this.beaconService.replaceBeacon(beacon);
+    }
+    
+    @PostMapping("/calibrate")
+    public String calibrateBeacon(@RequestBody CalibrationInfo calibrationInfo) {
+        return calibrationInfo.toString();
     }
 
 }
