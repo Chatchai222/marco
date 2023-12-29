@@ -20,10 +20,18 @@ public class FloorPlanService {
         return this.floorPlanRepository.findAll();
     }
 
-    public FloorPlanEntity getFloorPlanEntityById(Long inFloorPlanId) throws Exception{
+    public FloorPlanEntity getFloorPlanEntityByFloorPlanId(Long inFloorPlanId) throws Exception{
         Optional<FloorPlanEntity> optFloorPlanEntity = this.floorPlanRepository.findById(inFloorPlanId);
         if(optFloorPlanEntity.isEmpty()){
-            throw new Exception("Get FloorPlanEntity error: FloorPlanEntity with floorPlanId: " + inFloorPlanId + " does not exist");
+            throw new Exception("Get FloorPlanEntityByFloorPlanId error: FloorPlanEntity with floorPlanId: " + inFloorPlanId + " does not exist");
+        }
+        return optFloorPlanEntity.get();
+    }
+
+    public FloorPlanEntity getFloorPlanEntityByFloorId(Long inFloorId) throws Exception{
+        Optional<FloorPlanEntity> optFloorPlanEntity = this.floorPlanRepository.findByFloorId(inFloorId);
+        if(optFloorPlanEntity.isEmpty()){
+            throw new Exception("Get FloorPlanEntityByFloorId error: FloorPlanEntity with floorId: " + inFloorId + " does not exist");
         }
         return optFloorPlanEntity.get();
     }

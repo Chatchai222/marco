@@ -29,9 +29,14 @@ public class FloorPlanController {
         return this.floorPlanService.getAllFloorPlanEntity();
     }
     
-    @GetMapping("{id}")
-    public FloorPlanEntity getFloorPlanEntityById(@PathVariable Long inFloorPlanId) throws Exception{
-        return this.floorPlanService.getFloorPlanEntityById(inFloorPlanId);
+    @GetMapping("/{id}")
+    public FloorPlanEntity getFloorPlanEntityByFloorPlanId(@PathVariable("id") Long inFloorPlanId) throws Exception{
+        return this.floorPlanService.getFloorPlanEntityByFloorPlanId(inFloorPlanId);
+    }
+
+    @GetMapping("/floor/{id}")
+    public FloorPlanEntity getFloorPlanEntityByFloorId(@PathVariable("id") Long inFloorId) throws Exception{
+        return this.floorPlanService.getFloorPlanEntityByFloorId(inFloorId);
     }
 
     @PostMapping
@@ -39,14 +44,14 @@ public class FloorPlanController {
         return this.floorPlanService.addFloorPlanEntity(inFloorPlanEntity);
     }
 
-    @PutMapping("{id}")
-    public FloorPlanEntity replaceFloorPlanEntity(@PathVariable Long inFloorPlanId,
+    @PutMapping("/{id}")
+    public FloorPlanEntity replaceFloorPlanEntityByFloorPlanId(@PathVariable("id") Long inFloorPlanId,
                                                   @RequestBody FloorPlanEntity inFloorPlanEntity) throws Exception{
         return this.floorPlanService.replaceFloorPlanEntity(inFloorPlanId, inFloorPlanEntity);
     }
 
-    @DeleteMapping("{id}")
-    public void deleteFloorPlanEntity(@PathVariable Long inFloorPlanId) throws Exception{
+    @DeleteMapping("/{id}")
+    public void deleteFloorPlanEntity(@PathVariable("id") Long inFloorPlanId) throws Exception{
         this.floorPlanService.deleteFloorPlanEntityById(inFloorPlanId);
     }
 }

@@ -10,7 +10,8 @@ public class FloorPlanConfig {
     @Bean
     CommandLineRunner floorPlanCommandLineRunner(FloorPlanService floorPlanService){
         return args -> {
-            
+            floorPlanService.addFloorPlanEntity(new FloorPlanEntity(1L, 10L));
+            floorPlanService.addFloorPlanEntity(new FloorPlanEntity(2L, 20L));
         };
     }
 }
