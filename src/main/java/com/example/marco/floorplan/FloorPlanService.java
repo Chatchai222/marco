@@ -49,9 +49,9 @@ public class FloorPlanService {
         return this.floorPlanRepository.save(inFloorPlanEntity);
     }
 
-    public FloorPlanEntity replaceFloorPlanEntity(Long inId, FloorPlanEntity inFloorPlanEntity) throws Exception{
-        if(!this.floorPlanRepository.existsById(inId)){
-            throw new Exception("Replace FloorPlanEntity error: FloorPlanEntity with floorPlanId: " + inId + " does not exist");
+    public FloorPlanEntity replaceFloorPlanEntityByFloorPlanId(Long inFloorPlanId, FloorPlanEntity inFloorPlanEntity) throws Exception{
+        if(!this.floorPlanRepository.existsById(inFloorPlanId)){
+            throw new Exception("Replace FloorPlanEntity error: FloorPlanEntity with floorPlanId: " + inFloorPlanId + " does not exist");
         }
         if(inFloorPlanEntity.getFloorId() == null){
             throw new Exception("Replace FloorPlanEntity error: floorId is null");
@@ -59,8 +59,25 @@ public class FloorPlanService {
         if(inFloorPlanEntity.getFileId() == null){
             throw new Exception("Replace FloorPlanEntity error: fileId is null");
         }
-        inFloorPlanEntity.setFloorPlanId(inId);
+        inFloorPlanEntity.setFloorPlanId(inFloorPlanId);
         return this.floorPlanRepository.save(inFloorPlanEntity);
+    }
+
+    public FloorPlanEntity replaceFloorPlanEntityByFloorId(FloorPlanEntity inFloorPlanEntity) throws Exception{
+        Optional<FloorPlanEntity> optFloorPlanEntity = this.floorPlanRepository.findByFloorId(inFloorPlanEntity.getFloorId());
+        if(optFloorPlanEntity.isEmpty()){
+            throw new Exception("Replace FloorPlanEntityByFloorId error: FloorPlanEntity with floorId: " + inFloorPlanEntity.getFloorId() + " does not exist");
+        }
+        if(inFloorPlanEntity.getFloorId() == null){
+            throw new Exception("Replace FloorPlanEntityByFloorId error: floorId is null");
+        }
+        if(inFloorPlanEntity.getFileId() == null){
+            throw new Exception("Replace FloorPlanEntityByFloorId error: fileId is null");
+        }
+        FloorPlanEntity retrievedFloorPlanEntity = optFloorPlanEntity.get();
+        retrievedFloorPlanEntity.setFloorId(inFloorPlanEntity.getFloorId());
+        retrievedFloorPlanEntity.setFileId(inFloorPlanEntity.getFileId());
+        return this.floorPlanRepository.save(retrievedFloorPlanEntity);
     }
 
     public void deleteFloorPlanEntityById(Long inId) throws Exception{

@@ -10,4 +10,7 @@ public interface FloorPlanRepository extends JpaRepository<FloorPlanEntity, Long
     
     Optional<FloorPlanEntity> findByFloorId(Long inFloorId);
 
+    Boolean existsByFloorId(Long inFloorId);
+
+    
 }
