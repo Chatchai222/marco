@@ -80,11 +80,17 @@ public class FloorPlanService {
         return this.floorPlanRepository.save(retrievedFloorPlanEntity);
     }
 
-    public void deleteFloorPlanEntityById(Long inId) throws Exception{
-        if(!this.floorPlanRepository.existsById(inId)){
-            throw new Exception("Delete FloorPlanEntity error: floorPlanId: " + inId + " does not exist");
+    public void deleteFloorPlanEntityByFloorPlanId(Long inFloorPlanId) throws Exception{
+        if(!this.floorPlanRepository.existsById(inFloorPlanId)){
+            throw new Exception("Delete FloorPlanEntity error: floorPlanId: " + inFloorPlanId + " does not exist");
         }
-        this.floorPlanRepository.deleteById(inId);
+        this.floorPlanRepository.deleteById(inFloorPlanId);
     }
 
+    public void deleteFloorPlanEntityByFloorId(Long inFloorId) throws Exception{
+        if(!this.floorPlanRepository.existsByFloorId(inFloorId)){
+            throw new Exception("Delete FloorPlanEntityByFloorId error: floorId: " + inFloorId + " does not exist");
+        }
+        this.floorPlanRepository.deleteByFloorId(inFloorId);
+    }   
 }

@@ -55,7 +55,12 @@ public class FloorPlanController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteFloorPlanEntity(@PathVariable("id") Long inFloorPlanId) throws Exception{
-        this.floorPlanService.deleteFloorPlanEntityById(inFloorPlanId);
+    public void deleteFloorPlanEntityByFloorPlanId(@PathVariable("id") Long inFloorPlanId) throws Exception{
+        this.floorPlanService.deleteFloorPlanEntityByFloorPlanId(inFloorPlanId);
+    }
+
+    @DeleteMapping("/floor/{id}")
+    public void deleteFloorPlanEntityByFloorId(@PathVariable("id") Long inFloorId) throws Exception{
+        this.floorPlanService.deleteFloorPlanEntityByFloorId(inFloorId);
     }
 }
