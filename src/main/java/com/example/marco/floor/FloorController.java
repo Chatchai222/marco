@@ -29,22 +29,22 @@ public class FloorController {
     }
 
     @GetMapping("all")
-    public List<Floor> getAllFloor(){
+    public List<FloorEntity> getAllFloor(){
         return floorService.getAllFloor();
     }
 
     @GetMapping("id")
-    public Floor getFloorById(@RequestParam(name = "id") Long floorId){
+    public FloorEntity getFloorById(@RequestParam(name = "id") Long floorId){
         return floorService.getFloorById(floorId);
     }
 
     @PostMapping
-    public void addFloor(@RequestBody Floor floor){
+    public void addFloor(@RequestBody FloorEntity floor){
         floorService.addFloor(floor);
     }
 
     @PutMapping
-    public void replaceFloor(@RequestBody Floor floor){
+    public void replaceFloor(@RequestBody FloorEntity floor){
         floorService.replaceFloor(floor);
     }
 

@@ -16,23 +16,23 @@ public class FloorService {
         this.floorRepository = inFloorRepository;
     }
 
-    public List<Floor> getAllFloor(){
+    public List<FloorEntity> getAllFloor(){
         return this.floorRepository.findAll();
     }
 
-    public Floor getFloorById(Long floorId){
-        Optional<Floor> floorOpt = this.floorRepository.findById(floorId);
+    public FloorEntity getFloorById(Long floorId){
+        Optional<FloorEntity> floorOpt = this.floorRepository.findById(floorId);
         if (!floorOpt.isPresent()){
             throw new IllegalStateException("Floor with id:" + floorId + " does not exist");
         }
         return floorOpt.get();
     }
 
-    public void addFloor(Floor floor) {
+    public void addFloor(FloorEntity floor) {
         this.floorRepository.save(floor);
     }
 
-    public void replaceFloor(Floor floor) {
+    public void replaceFloor(FloorEntity floor) {
         if(floor.getId() == null){
             throw new IllegalStateException("Error: Floor with id:" + floor.getId() + " does not exist");
         }

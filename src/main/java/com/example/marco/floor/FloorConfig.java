@@ -12,9 +12,9 @@ public class FloorConfig {
     @Bean
     public CommandLineRunner FloorCommandLineRunner(FloorRepository repository){
         return args -> {
-            List<Floor> floorList = List.of(
-                new Floor("ECC 8th Floor", 75.91, 38.17, 189.75),
-                new Floor("ECC 9th Floor", 75.91, 38.17, 189.75)
+            List<FloorEntity> floorList = List.of(
+                new FloorEntity("ECC 8th Floor", 75.91, 38.17, 189.75),
+                new FloorEntity("ECC 9th Floor", 75.91, 38.17, 189.75)
             );
             repository.saveAll(floorList);
         };    
