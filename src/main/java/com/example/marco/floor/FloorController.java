@@ -30,26 +30,26 @@ public class FloorController {
 
     @GetMapping("all")
     public List<FloorEntity> getAllFloor(){
-        return floorService.getAllFloor();
+        return floorService.getAllFloorEntity();
     }
 
     @GetMapping("id")
-    public FloorEntity getFloorById(@RequestParam(name = "id") Long floorId){
-        return floorService.getFloorById(floorId);
+    public FloorEntity getFloorById(@RequestParam(name = "id") Long floorId) throws Exception{
+        return floorService.getFloorEntityByFloorId(floorId);
     }
 
     @PostMapping
-    public void addFloor(@RequestBody FloorEntity floor){
-        floorService.addFloor(floor);
+    public FloorEntity addFloor(@RequestBody FloorEntity floor) throws Exception{
+        return floorService.addFloorEntity(floor);
     }
 
     @PutMapping
-    public void replaceFloor(@RequestBody FloorEntity floor){
-        floorService.replaceFloor(floor);
+    public void replaceFloor(@RequestBody FloorEntity floor) throws Exception{
+        floorService.replaceFloorEntity(floor);
     }
 
     @DeleteMapping
-    public void deleteFloor(@RequestParam(name = "id") Long floorId){
+    public void deleteFloor(@RequestParam(name = "id") Long floorId) throws Exception{
         floorService.deleteFloorById(floorId);
     }
 

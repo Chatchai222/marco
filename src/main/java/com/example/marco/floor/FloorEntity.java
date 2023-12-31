@@ -21,7 +21,7 @@ public class FloorEntity {
         strategy = GenerationType.SEQUENCE,
         generator = "floorSequence"
     )
-    private Long id;
+    private Long floorId;
     private String name;
     private Double geoLength;
     private Double geoWidth;
@@ -38,20 +38,20 @@ public class FloorEntity {
         this.azimuth = azimuth;
     }
 
-    public FloorEntity(Long id, String name, Double geoLength, Double geoWidth, Double azimuth) {
-        this.id = id;
+    public FloorEntity(Long floorId, String name, Double geoLength, Double geoWidth, Double azimuth) {
+        this.floorId = floorId;
         this.name = name;
         this.geoLength = geoLength;
         this.geoWidth = geoWidth;
         this.azimuth = azimuth;
     }
 
-    public Long getId() {
-        return id;
+    public Long getFloorId() {
+        return floorId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFloorId(Long floorId) {
+        this.floorId = floorId;
     }
 
     public String getName() {
@@ -88,7 +88,7 @@ public class FloorEntity {
 
     @Override
     public String toString() {
-        return "FloorEntity [id=" + id + ", name=" + name + ", geoLength=" + geoLength + ", geoWidth=" + geoWidth
+        return "FloorEntity [floorId=" + floorId + ", name=" + name + ", geoLength=" + geoLength + ", geoWidth=" + geoWidth
                 + ", azimuth=" + azimuth + "]";
     }
     

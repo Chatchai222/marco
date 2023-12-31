@@ -16,34 +16,61 @@ public class FloorService {
         this.floorRepository = inFloorRepository;
     }
 
-    public List<FloorEntity> getAllFloor(){
+    public List<FloorEntity> getAllFloorEntity(){
         return this.floorRepository.findAll();
     }
 
-    public FloorEntity getFloorById(Long floorId){
-        Optional<FloorEntity> floorOpt = this.floorRepository.findById(floorId);
-        if (!floorOpt.isPresent()){
-            throw new IllegalStateException("Floor with id:" + floorId + " does not exist");
+    public FloorEntity getFloorEntityByFloorId(Long inFloorId) throws Exception{
+        Optional<FloorEntity> floorOpt = this.floorRepository.findById(inFloorId);
+        if(floorOpt.isEmpty()){
+            throw new Exception("Floor with id:" + inFloorId + " does not exist");
         }
         return floorOpt.get();
     }
 
-    public void addFloor(FloorEntity floor) {
-        this.floorRepository.save(floor);
+    public FloorEntity addFloorEntity(FloorEntity inFloorEntity) throws Exception{
+        if(inFloorEntity.getFloorId() != null){
+            throw new Exception("addFloorEntity error: FloorEntity cannot have explicit floorId: " + inFloorEntity.getFloorId());
+        }
+        if(inFloorEntity.getName() == null){
+            throw new Exception("addFloorEntity error: FloorEntity.name is null");
+        }
+        if(inFloorEntity.getGeoLength() == null){
+            throw new Exception("addFloorEntity error: FloorEntity.geoLength is null");
+        }
+        if(inFloorEntity.getGeoWidth() == null){
+            throw new Exception("addFloorEntity error: FloorEntity.geoWidth is null");
+        }
+        if(inFloorEntity.getAzimuth() == null){
+            throw new Exception("addFloorEntity error: FloorEntity.azimuth is null");
+        }
+        return this.floorRepository.save(inFloorEntity);
     }
 
-    public void replaceFloor(FloorEntity floor) {
-        if(floor.getId() == null){
-            throw new IllegalStateException("Error: Floor with id:" + floor.getId() + " does not exist");
+    public FloorEntity replaceFloorEntity(FloorEntity inFloorEntity) throws Exception{
+        if(inFloorEntity.getFloorId() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.floorId is null");
         }
-        this.floorRepository.save(floor);
+        if(inFloorEntity.getName() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.name is null");
+        }
+        if(inFloorEntity.getGeoLength() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.geoLength is null");
+        }
+        if(inFloorEntity.getGeoWidth() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.geoWidth is null");
+        }
+        if(inFloorEntity.getAzimuth() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.azimuth is null");
+        }
+        return this.floorRepository.save(inFloorEntity);
     }
 
-    public void deleteFloorById(Long floorId){
-        if(!floorRepository.existsById(floorId)){
-            throw new IllegalStateException("Error: Floor with id: " + floorId + " does not exist");
+    public void deleteFloorById(Long inFloorId) throws Exception{
+        if(!floorRepository.existsById(inFloorId)){
+            throw new Exception("deleteFloorEntity error:  FloorEntity with floorId: " + inFloorId + " does not exist");
         }
-        this.floorRepository.deleteById(floorId);
+        this.floorRepository.deleteById(inFloorId);
     }
 
 }
