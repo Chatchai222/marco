@@ -1,7 +1,6 @@
 package com.example.marco.floorplan;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,11 +46,21 @@ public class FloorPlanController {
     @PutMapping("/{id}")
     public FloorPlanEntity replaceFloorPlanEntityByFloorPlanId(@PathVariable("id") Long inFloorPlanId,
                                                   @RequestBody FloorPlanEntity inFloorPlanEntity) throws Exception{
-        return this.floorPlanService.replaceFloorPlanEntity(inFloorPlanId, inFloorPlanEntity);
+        return this.floorPlanService.replaceFloorPlanEntityByFloorPlanId(inFloorPlanId, inFloorPlanEntity);
+    }
+
+    @PutMapping("/floor")
+    public FloorPlanEntity reaplceFloorPlanEntityByFloorId(@RequestBody FloorPlanEntity inFloorPlanEntity) throws Exception{
+        return this.floorPlanService.replaceFloorPlanEntityByFloorId(inFloorPlanEntity);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteFloorPlanEntity(@PathVariable("id") Long inFloorPlanId) throws Exception{
-        this.floorPlanService.deleteFloorPlanEntityById(inFloorPlanId);
+    public void deleteFloorPlanEntityByFloorPlanId(@PathVariable("id") Long inFloorPlanId) throws Exception{
+        this.floorPlanService.deleteFloorPlanEntityByFloorPlanId(inFloorPlanId);
+    }
+
+    @DeleteMapping("/floor/{id}")
+    public void deleteFloorPlanEntityByFloorId(@PathVariable("id") Long inFloorId) throws Exception{
+        this.floorPlanService.deleteFloorPlanEntityByFloorId(inFloorId);
     }
 }
