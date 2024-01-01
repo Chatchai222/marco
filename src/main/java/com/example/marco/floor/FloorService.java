@@ -70,10 +70,7 @@ public class FloorService {
         return this.floorRepository.save(inFloorEntity);
     }
 
-    public void deleteFloorById(Long inFloorId) throws Exception{
-        if(!floorRepository.existsById(inFloorId)){
-            throw new Exception("deleteFloorEntity error:  FloorEntity with floorId: " + inFloorId + " does not exist");
-        }
+    public void deleteFloorEntityByFloorId(Long inFloorId) throws Exception{
         this.floorPlanRepository.deleteByFloorId(inFloorId);
         this.floorRepository.deleteById(inFloorId);
     }

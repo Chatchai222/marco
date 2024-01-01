@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1/floor")
+@RequestMapping(path = "api/v1/floors")
 public class FloorController {
     
     private final FloorService floorService;
@@ -28,29 +28,30 @@ public class FloorController {
         return "Hello, you tried getting in floor apis";
     }
 
-    @GetMapping("all")
+    @GetMapping
     public List<FloorEntity> getAllFloor(){
         return floorService.getAllFloorEntity();
     }
 
-    @GetMapping("id")
-    public FloorEntity getFloorById(@RequestParam(name = "id") Long floorId) throws Exception{
+    @GetMapping("/{floorId}")
+    public FloorEntity getFloorById(@PathVariable("floorId") Long floorId) throws Exception{
         return floorService.getFloorEntityByFloorId(floorId);
     }
 
     @PostMapping
-    public FloorEntity addFloor(@RequestBody FloorEntity floor) throws Exception{
-        return floorService.addFloorEntity(floor);
+    public FloorEntity addFloor(@RequestBody FloorEntity inFloorEntity) throws Exception{
+        return floorService.addFloorEntity(inFloorEntity);
     }
 
-    @PutMapping
-    public void replaceFloor(@RequestBody FloorEntity floor) throws Exception{
-        floorService.replaceFloorEntity(floor);
+    @PutMapping("/{floorId}")
+    public void replaceFloor(@PathVariable("floorId") Long inFloorId, @RequestBody FloorEntity inFloorEntity) throws Exception{
+        inFloorEntity.setFloorId(inFloorId);
+        floorService.replaceFloorEntity(inFloorEntity);
     }
 
-    @DeleteMapping
-    public void deleteFloor(@RequestParam(name = "id") Long floorId) throws Exception{
-        floorService.deleteFloorById(floorId);
+    @DeleteMapping("/{floorId}")
+    public void deleteFloor(@PathVariable(name = "floorId") Long floorId) throws Exception{
+        floorService.deleteFloorEntityByFloorId(floorId);
     }
 
 }
