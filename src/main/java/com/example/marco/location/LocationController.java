@@ -24,27 +24,27 @@ public class LocationController {
     }
 
     @GetMapping("all")
-    public List<Location> getAllLocation() {
-        return locationService.getAllLocation();
+    public List<LocationEntity> getAllLocation() {
+        return locationService.getAllLocationEntity();
     }
 
     @GetMapping("id")
-    public Location getLocationById(@RequestParam(name = "id") Long locationId){
-        return locationService.getLocationById(locationId);
+    public LocationEntity getLocationById(@RequestParam(name = "id") Long locationId) throws Exception{
+        return locationService.getLocationEntityByLocationId(locationId);
     }
 
     @PostMapping
-    public void addLocation(@RequestBody Location location){
-        locationService.addLocation(location);
+    public void addLocation(@RequestBody LocationEntity location) throws Exception{
+        locationService.addLocationEntity(location);
     }
     
     @DeleteMapping("id")
-    public void deleteLocationById(@RequestParam(name = "id") Long locationId){
-        locationService.deleteLocationById(locationId);
+    public void deleteLocationById(@RequestParam(name = "id") Long locationId) throws Exception{
+        locationService.deleteLocationEntityByLocationId(locationId);
     }
 
     @PutMapping
-    public void replaceLocation(@RequestBody Location location){
-        locationService.replaceLocation(location);
+    public void replaceLocation(@RequestBody LocationEntity location) throws Exception{
+        locationService.replaceLocationEntity(location);
     }
 }
