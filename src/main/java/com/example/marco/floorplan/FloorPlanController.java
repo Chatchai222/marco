@@ -33,8 +33,8 @@ public class FloorPlanController {
         return this.floorPlanService.getFloorPlanEntityByFloorPlanId(inFloorPlanId);
     }
 
-    @GetMapping("/floor/{id}")
-    public FloorPlanEntity getFloorPlanEntityByFloorId(@PathVariable("id") Long inFloorId) throws Exception{
+    @GetMapping("/floor/{floorId}")
+    public FloorPlanEntity getFloorPlanEntityByFloorId(@PathVariable("floorId") Long inFloorId) throws Exception{
         return this.floorPlanService.getFloorPlanEntityByFloorId(inFloorId);
     }
 
@@ -45,12 +45,14 @@ public class FloorPlanController {
 
     @PutMapping("/{id}")
     public FloorPlanEntity replaceFloorPlanEntityByFloorPlanId(@PathVariable("id") Long inFloorPlanId,
-                                                  @RequestBody FloorPlanEntity inFloorPlanEntity) throws Exception{
+                                                               @RequestBody FloorPlanEntity inFloorPlanEntity) throws Exception{
         return this.floorPlanService.replaceFloorPlanEntityByFloorPlanId(inFloorPlanId, inFloorPlanEntity);
     }
 
-    @PutMapping("/floor")
-    public FloorPlanEntity reaplceFloorPlanEntityByFloorId(@RequestBody FloorPlanEntity inFloorPlanEntity) throws Exception{
+    @PutMapping("/floor/{floorId}")
+    public FloorPlanEntity reaplceFloorPlanEntityByFloorId(@PathVariable("floorId") Long inFloorId,
+                                                           @RequestBody FloorPlanEntity inFloorPlanEntity) throws Exception{
+        inFloorPlanEntity.setFloorId(inFloorId);                                                    
         return this.floorPlanService.replaceFloorPlanEntityByFloorId(inFloorPlanEntity);
     }
 
@@ -59,8 +61,8 @@ public class FloorPlanController {
         this.floorPlanService.deleteFloorPlanEntityByFloorPlanId(inFloorPlanId);
     }
 
-    @DeleteMapping("/floor/{id}")
-    public void deleteFloorPlanEntityByFloorId(@PathVariable("id") Long inFloorId) throws Exception{
+    @DeleteMapping("/floor/{floorId}")
+    public void deleteFloorPlanEntityByFloorId(@PathVariable("floorId") Long inFloorId) throws Exception{
         this.floorPlanService.deleteFloorPlanEntityByFloorId(inFloorId);
     }
 }

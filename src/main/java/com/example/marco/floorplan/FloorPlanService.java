@@ -6,14 +6,23 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marco.file.FileRepository;
+import com.example.marco.floor.FloorRepository;
+
 @Service
 public class FloorPlanService {
     
     private FloorPlanRepository floorPlanRepository;
+    private FloorRepository floorRepository;
+    private FileRepository fileRepository;
 
     @Autowired
-    public FloorPlanService(FloorPlanRepository inFloorPlanRepository){
+    public FloorPlanService(FloorPlanRepository inFloorPlanRepository,
+                            FloorRepository inFloorRepository,
+                            FileRepository inFileRepository){
         this.floorPlanRepository = inFloorPlanRepository;
+        this.floorRepository = inFloorRepository;
+        this.fileRepository = inFileRepository;
     }
 
     public List<FloorPlanEntity> getAllFloorPlanEntity(){
@@ -46,18 +55,30 @@ public class FloorPlanService {
         if(inFloorPlanEntity.getFileId() == null){
             throw new Exception("Add FloorPlanEntity error: fileId is null");
         }
+        if(!this.floorRepository.existsById(inFloorPlanEntity.getFloorId())){
+            throw new Exception("Add FloorPlanEntity error: FloorEntity with floorId: " + inFloorPlanEntity.getFloorId() + " does not exist");
+        }
+        if(!this.fileRepository.existsById(inFloorPlanEntity.getFileId())){
+            throw new Exception("Add FloorPlanEntity error: FileEntity with fileId: " + inFloorPlanEntity.getFileId() + " does not exist");
+        }
         return this.floorPlanRepository.save(inFloorPlanEntity);
     }
 
     public FloorPlanEntity replaceFloorPlanEntityByFloorPlanId(Long inFloorPlanId, FloorPlanEntity inFloorPlanEntity) throws Exception{
         if(!this.floorPlanRepository.existsById(inFloorPlanId)){
-            throw new Exception("Replace FloorPlanEntity error: FloorPlanEntity with floorPlanId: " + inFloorPlanId + " does not exist");
+            throw new Exception("replaceFloorPlanEntityByFloorPlanId error: FloorPlanEntity with floorPlanId: " + inFloorPlanId + " does not exist");
         }
         if(inFloorPlanEntity.getFloorId() == null){
-            throw new Exception("Replace FloorPlanEntity error: floorId is null");
+            throw new Exception("replaceFloorPlanEntityByFloorPlanId  error: floorId is null");
         }
         if(inFloorPlanEntity.getFileId() == null){
-            throw new Exception("Replace FloorPlanEntity error: fileId is null");
+            throw new Exception("replaceFloorPlanEntityByFloorPlanId  error: fileId is null");
+        }
+        if(!this.floorRepository.existsById(inFloorPlanEntity.getFloorId())){
+            throw new Exception("replaceFloorPlanEntityByFloorPlanId  error: FloorEntity with floorId: " + inFloorPlanEntity.getFloorId() + " does not exist");
+        }
+        if(!this.fileRepository.existsById(inFloorPlanEntity.getFileId())){
+            throw new Exception("replaceFloorPlanEntityByFloorPlanId  error: FileEntity with fileId: " + inFloorPlanEntity.getFileId() + " does not exist");
         }
         inFloorPlanEntity.setFloorPlanId(inFloorPlanId);
         return this.floorPlanRepository.save(inFloorPlanEntity);
@@ -65,14 +86,17 @@ public class FloorPlanService {
 
     public FloorPlanEntity replaceFloorPlanEntityByFloorId(FloorPlanEntity inFloorPlanEntity) throws Exception{
         Optional<FloorPlanEntity> optFloorPlanEntity = this.floorPlanRepository.findByFloorId(inFloorPlanEntity.getFloorId());
-        if(optFloorPlanEntity.isEmpty()){
-            throw new Exception("Replace FloorPlanEntityByFloorId error: FloorPlanEntity with floorId: " + inFloorPlanEntity.getFloorId() + " does not exist");
-        }
         if(inFloorPlanEntity.getFloorId() == null){
-            throw new Exception("Replace FloorPlanEntityByFloorId error: floorId is null");
+            throw new Exception("replaceFloorPlanEntityByFloorId error: floorId is null");
         }
         if(inFloorPlanEntity.getFileId() == null){
-            throw new Exception("Replace FloorPlanEntityByFloorId error: fileId is null");
+            throw new Exception("replaceFloorPlanEntityByFloorId error: fileId is null");
+        }
+        if(!this.floorRepository.existsById(inFloorPlanEntity.getFloorId())){
+            throw new Exception("replaceFloorPlanEntityByFloorId  error: FloorEntity with floorId: " + inFloorPlanEntity.getFloorId() + " does not exist");
+        }
+        if(!this.fileRepository.existsById(inFloorPlanEntity.getFileId())){
+            throw new Exception("replaceFloorPlanEntityByFloorId  error: FileEntity with fileId: " + inFloorPlanEntity.getFileId() + " does not exist");
         }
         FloorPlanEntity retrievedFloorPlanEntity = optFloorPlanEntity.get();
         retrievedFloorPlanEntity.setFloorId(inFloorPlanEntity.getFloorId());
@@ -81,16 +105,10 @@ public class FloorPlanService {
     }
 
     public void deleteFloorPlanEntityByFloorPlanId(Long inFloorPlanId) throws Exception{
-        if(!this.floorPlanRepository.existsById(inFloorPlanId)){
-            throw new Exception("Delete FloorPlanEntity error: floorPlanId: " + inFloorPlanId + " does not exist");
-        }
         this.floorPlanRepository.deleteById(inFloorPlanId);
     }
 
     public void deleteFloorPlanEntityByFloorId(Long inFloorId) throws Exception{
-        if(!this.floorPlanRepository.existsByFloorId(inFloorId)){
-            throw new Exception("Delete FloorPlanEntityByFloorId error: floorId: " + inFloorId + " does not exist");
-        }
         this.floorPlanRepository.deleteByFloorId(inFloorId);
     }   
 }
