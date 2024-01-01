@@ -46,7 +46,8 @@ public class FloorPlanController {
     @PutMapping("/{id}")
     public FloorPlanEntity replaceFloorPlanEntityByFloorPlanId(@PathVariable("id") Long inFloorPlanId,
                                                                @RequestBody FloorPlanEntity inFloorPlanEntity) throws Exception{
-        return this.floorPlanService.replaceFloorPlanEntityByFloorPlanId(inFloorPlanId, inFloorPlanEntity);
+        inFloorPlanEntity.setFloorPlanId(inFloorPlanId);                                                        
+        return this.floorPlanService.replaceFloorPlanEntityByFloorPlanId(inFloorPlanEntity);
     }
 
     @PutMapping("/floor/{floorId}")
