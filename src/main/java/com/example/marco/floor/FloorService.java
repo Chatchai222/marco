@@ -6,14 +6,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marco.floorplan.FloorPlanRepository;
+
 @Service
 public class FloorService {
     
     private final FloorRepository floorRepository;
+    private final FloorPlanRepository floorPlanRepository;
 
     @Autowired
-    public FloorService(FloorRepository inFloorRepository){
+    public FloorService(FloorRepository inFloorRepository, FloorPlanRepository inFloorPlanRepository){
         this.floorRepository = inFloorRepository;
+        this.floorPlanRepository = inFloorPlanRepository;
     }
 
     public List<FloorEntity> getAllFloorEntity(){
@@ -70,6 +74,7 @@ public class FloorService {
         if(!floorRepository.existsById(inFloorId)){
             throw new Exception("deleteFloorEntity error:  FloorEntity with floorId: " + inFloorId + " does not exist");
         }
+        this.floorPlanRepository.deleteByFloorId(inFloorId);
         this.floorRepository.deleteById(inFloorId);
     }
 
