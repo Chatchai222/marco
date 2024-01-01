@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface FloorPlanRepository extends JpaRepository<FloorPlanEntity, Long> {
     
     Optional<FloorPlanEntity> findByFloorId(Long inFloorId);
-
     Boolean existsByFloorId(Long inFloorId);
-
     void deleteByFloorId(Long inFloorId);
+
+    void deleteByFileId(Long inFileId);
 }

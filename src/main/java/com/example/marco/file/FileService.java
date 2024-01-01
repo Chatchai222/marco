@@ -9,14 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.marco.floorplan.FloorPlanRepository;
+
 @Service
 public class FileService {
     
     private final FileRepository fileRepository;
+    private final FloorPlanRepository floorPlanRepository;
 
     @Autowired
-    public FileService(FileRepository fileRepository){
-        this.fileRepository = fileRepository;
+    public FileService(FileRepository inFileRepository, FloorPlanRepository inFloorPlanRepository){
+        this.fileRepository = inFileRepository;
+        this.floorPlanRepository = inFloorPlanRepository;
     }
 
     public void save(MultipartFile file) throws IOException {
@@ -51,11 +55,8 @@ public class FileService {
         fileRepository.save(fileEntity);
     }
 
-    public void deleteFile(Long id) throws Exception {
-        if (fileRepository.existsById(id)){
-            fileRepository.deleteById(id);
-        } else {
-            throw new Exception("Cannot delete file with id: " + id + " since file does not exist");
-        }
+    public void deleteFile(Long inFileId){
+        this.fileRepository.deleteById(inFileId);
+        this.floorPlanRepository.deleteByFileId(inFileId);
     }
 }
