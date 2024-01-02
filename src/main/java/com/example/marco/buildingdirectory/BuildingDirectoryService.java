@@ -53,13 +53,13 @@ public class BuildingDirectoryService {
         BuildingDirectoryEntity entityToSave = null;
         if(optEntity.isEmpty()){ // Insert new entity
             entityToSave = inBuildingDirectoryEntity;
-        } else { // Update an existing entity ("assign b")
+        } else { // Update an existing entity
             entityToSave = optEntity.get();
             entityToSave.setBuildingId(inBuildingDirectoryEntity.getBuildingId());
         }
         return this.buildingDirectoryRepository.save(entityToSave);
         /* 
-        
+        // F***ed up experimentation
         if(optEntity.isEmpty()){ // Inserting new Entity
             entityToSave = new BuildingDirectoryEntity();
             entityToSave.setBuildingId(inBuildingDirectoryEntity.getBuildingId());
@@ -76,4 +76,25 @@ public class BuildingDirectoryService {
         }
         */
     }
+
+    public BuildingDirectoryEntity getBuildingDirectoryEntityByFloorId(Long inFloorId) throws Exception{
+        Optional<BuildingDirectoryEntity> optEntity = this.buildingDirectoryRepository.findByFloorId(inFloorId);
+        if(optEntity.isEmpty()){
+            throw new Exception("getBuildingDirectoryEntityByFloorId error: buildingDirectoryEntity with floorId: " + inFloorId + " does not exist");
+        }
+        return optEntity.get(); 
+    }
+
+    public void deleteBuildingDirectoryEntityByFloorId(Long inFloorId){
+        this.buildingDirectoryRepository.deleteByFloorId(inFloorId);
+    }
+
+    public List<BuildingDirectoryEntity> getBuildingDirectoryEntitiesByBuildingId(Long inBuildingId){
+        return this.buildingDirectoryRepository.findByBuildingId(inBuildingId);
+    }
+
+    public void deleteBuildingDirectoryEntitiesByBuildingId(Long inBuildingId){
+        this.buildingDirectoryRepository.deleteByBuildingId(inBuildingId);
+    }
+
 }
