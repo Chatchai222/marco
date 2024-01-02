@@ -13,8 +13,10 @@ public class FloorConfig {
     public CommandLineRunner FloorCommandLineRunner(FloorRepository repository){
         return args -> {
             List<FloorEntity> floorList = List.of(
-                new FloorEntity("ECC 8th Floor", 75.91, 38.17, 189.75),
-                new FloorEntity("ECC 9th Floor", 75.91, 38.17, 189.75)
+                new FloorEntity(1L, "ECC 8th Floor", 75.91, 38.17, 189.75),
+                new FloorEntity(2L, "ECC 9th Floor", 75.91, 38.17, 189.75),
+                new FloorEntity(3L, "HM 6th Floor", 75.61, 34.23, 35.32),
+                new FloorEntity(4L, "HM 7th Floor", 75.61, 34.23, 35.32)
             );
             repository.saveAll(floorList);
         };    
