@@ -1,5 +1,7 @@
 package com.example.marco.buildingdirectory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import jakarta.persistence.Table;
 @Table
 public class BuildingDirectoryEntity {
     
+    @JsonIgnore
     @Id
     @SequenceGenerator(
         name = "buildingSequence",
@@ -24,9 +27,10 @@ public class BuildingDirectoryEntity {
     )
     private Long buildingDirectoryId;
 
+    @Column(nullable = false)
     private Long buildingId;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private Long floorId;
 
     public BuildingDirectoryEntity() {

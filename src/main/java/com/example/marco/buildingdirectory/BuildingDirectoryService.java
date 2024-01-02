@@ -29,58 +29,51 @@ public class BuildingDirectoryService {
         return this.buildingDirectoryRepository.findAll();
     }
 
-    public BuildingDirectoryEntity getBuildingDirectoryEntityByBuildingDirectoryId(Long inBuildingDirectoryId) throws Exception{
-        Optional<BuildingDirectoryEntity> optBuildingDirectoryEntity = this.buildingDirectoryRepository.findById(inBuildingDirectoryId);
-        if(optBuildingDirectoryEntity.isEmpty()){
-            throw new Exception("getBuildingDirectoryEntityByBuildingDirectoryId error: BuildingDirectoryEntity.buildingDirectoryId = " + inBuildingDirectoryId + " does not exist");
-        }
-        return optBuildingDirectoryEntity.get();
-    }
-
-    public BuildingDirectoryEntity addBuildingDirectoryEntity(BuildingDirectoryEntity inBuildingDirectoryEntity) throws Exception{
+    public BuildingDirectoryEntity upsertBuildingDirectoryEntity(BuildingDirectoryEntity inBuildingDirectoryEntity) throws Exception{
         if(inBuildingDirectoryEntity.getBuildingDirectoryId() != null){
-            throw new Exception("addBuildingDirectoryEntity error: Cannot have explicit buildingDirectoryId: " + inBuildingDirectoryEntity.getBuildingDirectoryId());
+            throw new Exception("upsertBuildingDirectoryEntity error: Cannot have explicit buildingDirectoryId: " + inBuildingDirectoryEntity.getBuildingDirectoryId());
         }
         if(inBuildingDirectoryEntity.getBuildingId() == null){
-            throw new Exception("addBuildingDirectoryEntity error: buildingId is null");
+            throw new Exception("upsertBuildingDirectoryEntity error: buildingId is null");
         }
         if(inBuildingDirectoryEntity.getFloorId() == null){
-            throw new Exception("addBuildingDirectoryEntity error: floorId is null");
+            throw new Exception("upsertBuildingDirectoryEntity error: floorId is null");
         }
+        
         if(!this.buildingRepository.existsById(inBuildingDirectoryEntity.getBuildingId())){
-            throw new Exception("addBuildingDirectoryEntity error: BuildingEntity with buildingId: " + inBuildingDirectoryEntity.getBuildingId() + " does not exist");
+            throw new Exception("upsertBuildingDirectoryEntity error: BuildingEntity with buildingId: " + inBuildingDirectoryEntity.getBuildingId() + " does not exist");
         }
         if(!this.floorRepository.existsById(inBuildingDirectoryEntity.getFloorId())){
-            throw new Exception("addBuildingDirectoryEntity error: FloorEntity with floorId: " + inBuildingDirectoryEntity.getFloorId());
+            throw new Exception("upsertBuildingDirectoryEntity error: FloorEntity with floorId: " + inBuildingDirectoryEntity.getFloorId() + " does not exist");
         }
-        return this.buildingDirectoryRepository.save(inBuildingDirectoryEntity);
-    }
 
-    public BuildingDirectoryEntity replaceBuildingDirectoryEntityByBuildingDirectoryId(BuildingDirectoryEntity inBuildingDirectoryEntity) throws Exception{
-        if(inBuildingDirectoryEntity.getBuildingDirectoryId() == null){
-            throw new Exception("replaceBuildingDirectoryEntity error: buildingDirectoryId is null");
+        // this is f***ed but it works
+        Optional<BuildingDirectoryEntity> optEntity = this.buildingDirectoryRepository
+                                                          .findByFloorId(inBuildingDirectoryEntity.getFloorId());
+        BuildingDirectoryEntity entityToSave = null;
+        if(optEntity.isEmpty()){ // Insert new entity
+            entityToSave = inBuildingDirectoryEntity;
+        } else { // Update an existing entity ("assign b")
+            entityToSave = optEntity.get();
+            entityToSave.setBuildingId(inBuildingDirectoryEntity.getBuildingId());
         }
-        if(inBuildingDirectoryEntity.getBuildingId() == null){
-            throw new Exception("replaceBuildingDirectoryEntity error: buildingId is null");
+        return this.buildingDirectoryRepository.save(entityToSave);
+        /* 
+        
+        if(optEntity.isEmpty()){ // Inserting new Entity
+            entityToSave = new BuildingDirectoryEntity();
+            entityToSave.setBuildingId(inBuildingDirectoryEntity.getBuildingId());
+            entityToSave.setFloorId(inBuildingDirectoryEntity.getFloorId());
+            return this.buildingDirectoryRepository.save(entityToSave);
+        } else {
+            BuildingDirectoryEntity retrievedEntity = optEntity.get();
+            if(retrievedEntity.getBuildingId() == inBuildingDirectoryEntity.getBuildingId() &&
+               retrievedEntity.getFloorId() == inBuildingDirectoryEntity.getFloorId()){ // InEntity == RetrievedEntity
+                return retrievedEntity;
+            } else { // InEntity != RetrievedEntity 
+                throw new Exception("upsertBuildingDirectoryEntity error: Potential violate unique FloorId: " + inBuildingDirectoryEntity.getFloorId());
+            }
         }
-        if(inBuildingDirectoryEntity.getFloorId() == null){
-            throw new Exception("replaceBuildingDirectoryEntity error: floorId is null");
-        }
-        if(!this.buildingRepository.existsById(inBuildingDirectoryEntity.getBuildingId())){
-            throw new Exception("replaceBuildingDirectoryEntity error: BuildingEntity with buildingId: " + inBuildingDirectoryEntity.getBuildingId() + " does not exist");
-        }
-        if(!this.floorRepository.existsById(inBuildingDirectoryEntity.getFloorId())){
-            throw new Exception("replaceBuildingDirectoryEntity error: FloorEntity with floorId: " + inBuildingDirectoryEntity.getFloorId());
-        }
-        return this.buildingDirectoryRepository.save(inBuildingDirectoryEntity);
+        */
     }
-
-    public void deleteBuildingDirectoryEntityByBuildingDirectoryId(Long inBuildingDirectoryId){
-        this.buildingDirectoryRepository.deleteById(inBuildingDirectoryId);
-    }
-
-    public List<BuildingDirectoryEntity> getBuildingDirectoryEntitiesByBuildingId(Long inBuildingId){
-        return this.buildingDirectoryRepository.findByBuildingId(inBuildingId);
-    }
-
 }
