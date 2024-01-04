@@ -6,14 +6,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marco.buildingdirectory.BuildingDirectoryRepository;
+
 @Service
 public class BuildingService {
     
     private BuildingRepository buildingRepository;
+    private BuildingDirectoryRepository buildingDirectoryRepository;
     
     @Autowired
-    public BuildingService(BuildingRepository inBuildingRepository){
+    public BuildingService(BuildingRepository inBuildingRepository, BuildingDirectoryRepository inBuildingDirectoryRepository){
         this.buildingRepository = inBuildingRepository;
+        this.buildingDirectoryRepository = inBuildingDirectoryRepository;
     }
 
     public List<BuildingEntity> getAllBuildingEntity(){
@@ -48,9 +52,7 @@ public class BuildingService {
     }
 
     public void deleteBuildingEntityById(Long id) throws Exception { 
-        if(!buildingRepository.existsById(id)){
-            throw new Exception("BuildingEntity with id: " + id + " does not exist");
-        } 
         this.buildingRepository.deleteById(id);
+        this.buildingDirectoryRepository.deleteByBuildingId(id);
     }
 }
