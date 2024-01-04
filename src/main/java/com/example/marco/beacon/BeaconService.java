@@ -75,4 +75,16 @@ public class BeaconService {
     public void deleteBeaconEntityByBeaconId(Long inBeaconId){
         this.beaconRepository.deleteById(inBeaconId);
     }
+
+    public BeaconEntity getBeaconEntityByMacAddress(String inMacAddress) throws Exception{
+        Optional<BeaconEntity> optBeacon = this.beaconRepository.findByMacAddress(inMacAddress);
+        if(optBeacon.isEmpty()){
+            throw new Exception("replaceBeaconEntity error: BeaconEntity with macAddress: " + inMacAddress + " does not exist");
+        }
+        return optBeacon.get();
+    }
+
+    public void deleteBeaconEntityByMacAddress(String inMacAddress){
+        this.beaconRepository.deleteByMacAddress(inMacAddress);
+    }
 }

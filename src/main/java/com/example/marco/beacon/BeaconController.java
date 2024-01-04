@@ -50,4 +50,13 @@ public class BeaconController {
         this.beaconService.deleteBeaconEntityByBeaconId(inBeaconId);
     }
 
+    @GetMapping("/macAddress/{macAddress}")
+    public BeaconEntity getBeaconEntityByMacAddress(@PathVariable("macAddress") String inMacAddress) throws Exception{
+        return this.beaconService.getBeaconEntityByMacAddress(inMacAddress);
+    }
+
+    @DeleteMapping("/macAddress/{macAddress}")
+    public void deleteBeaconEntityByMacAddress(@PathVariable("macAddress") String inMacAddress){
+        this.beaconService.deleteBeaconEntityByMacAddress(inMacAddress);
+    }
 }
