@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,39 +24,14 @@ public class BeaconController {
         this.beaconService = beaconService;
     }
 
-    @GetMapping("all")
-    public List<Beacon> getAllBeacon(){
-        return this.beaconService.getAllBeacon();
+    @GetMapping
+    public List<BeaconEntity> getAllBeaconEntities(){
+        return this.beaconService.getAllBeaconEntities();
     }
 
-    @GetMapping("id")
-    public Beacon getBeaconById(@RequestParam(name = "id") Long beaconId){
-        return this.beaconService.getBeaconById(beaconId);
-    }
-
-    @GetMapping("macAddress")
-    public Beacon getBeaconByMacAddress(@RequestParam(name = "macAddress") String macAddress){
-        return this.beaconService.getBeaconByMacAddress(macAddress);
-    }
-
-    @PostMapping
-    public void addBeacon(@RequestBody Beacon beacon){
-        this.beaconService.addBeacon(beacon);
-    }
-
-    @DeleteMapping("id")
-    public void deleteBeaconById(@RequestParam(name = "id") Long beaconId){
-        this.beaconService.deleteBeaconById(beaconId);
-    }
-
-    @DeleteMapping("macAddress")
-    public void deleteBeaconByMacAddress(@RequestParam(name = "macAddress") String macAddress){
-        this.beaconService.deleteBeaconByMacAddress(macAddress);
-    }
-
-    @PutMapping
-    public void replaceLocation(@RequestBody Beacon beacon){
-        this.beaconService.replaceBeacon(beacon);
+    @GetMapping("/{beaconId}")
+    public BeaconEntity getBeaconEntityByBeaconId(@PathVariable("beaconId") Long inBeaconId) throws Exception{
+        return this.beaconService.getBeaconEntityByBeaconId(inBeaconId);
     }
 
 }

@@ -16,64 +16,16 @@ public class BeaconService {
         this.beaconRepository = beaconRepository;
     }
     
-    public List<Beacon> getAllBeacon(){
+    public List<BeaconEntity> getAllBeaconEntities(){
         return this.beaconRepository.findAll();
     }
 
-    public Beacon getBeaconById(Long beaconId){
-        Optional<Beacon> beaconOpt = this.beaconRepository.findById(beaconId);
-        if (!beaconOpt.isPresent()){
-            throw new IllegalStateException("Beacon with id: " + beaconId + " does not exist");
+    public BeaconEntity getBeaconEntityByBeaconId(Long inBeaconId) throws Exception{
+        Optional<BeaconEntity> optBeacon = this.beaconRepository.findById(inBeaconId);
+        if(optBeacon.isEmpty()){
+            throw new Exception("getBeaconEntityByBeaconId errro: BeaconEntity with beaconId: " + inBeaconId + " does not exist");
         }
-        return beaconOpt.get();
-    }
-
-    public Beacon getBeaconByMacAddress(String macAddress){
-        Optional<Beacon> beaconOpt = this.beaconRepository.findByMacAddress(macAddress);
-        if (!beaconOpt.isPresent()){
-            throw new IllegalStateException("Beacon with mac address: " + macAddress + " does not exist");
-        }
-        return beaconOpt.get();
-    }
-
-    public void addBeacon(Beacon beacon){
-        if(beacon.isAnyNonIdAttributeNull()){
-            throw new IllegalStateException("Cannot add beacon, the following attribute " + beacon.getNullAttributes() + " is null");
-        }
-
-        Optional<Beacon> beaconOpt = this.beaconRepository.findByMacAddress(beacon.getMacAddress());
-        if(beaconOpt.isPresent()){
-            throw new IllegalStateException("beacon with mac address " + beacon.getMacAddress() + " already exists");
-        }
-        this.beaconRepository.save(beacon);
-    }
-
-    public void deleteBeaconById(Long beaconId) {
-        Boolean exists = this.beaconRepository.existsById(beaconId);
-        if(!exists){
-            throw new IllegalStateException("beacon with id " + beaconId + " does not exist");
-        }
-        this.beaconRepository.deleteById(beaconId);
-    }
-
-    public void deleteBeaconByMacAddress(String macAddress) {
-        Optional<Beacon> beaconOpt = this.beaconRepository.findByMacAddress(macAddress);
-        if(!beaconOpt.isPresent()){
-            throw new IllegalStateException("beacon with mac address " + macAddress + " does not exist");
-        }
-        Beacon beacon = beaconOpt.get();
-        this.beaconRepository.deleteById(beacon.getId());
-    }
-
-    public void replaceBeacon(Beacon inBeacon) {
-        if(inBeacon.isAnyAttributeNull()){
-            throw new IllegalStateException("beacon replacement is missing " + inBeacon.getNullAttributes() + " attributes");
-        }
-        Optional<Beacon> beaconOpt = this.beaconRepository.findById(inBeacon.getId());
-        if(!beaconOpt.isPresent()){
-            throw new IllegalStateException("beacon with id " + inBeacon.getId() + " does not exist");
-        }
-        this.beaconRepository.save(inBeacon);
+        return optBeacon.get();
     }
 
 }

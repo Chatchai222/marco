@@ -12,9 +12,9 @@ public class BeaconConfig {
     @Bean
     public CommandLineRunner BeaconCommandLineRunner(BeaconRepository beaconRepository){
         return args -> {
-            List<Beacon> beaconList = List.of(
-                new Beacon("FF:00:CC:CC:EE:DD", "8th floor", 52.4, 32.5),
-                new Beacon("55:55:55:AA:AA:BB", "8th floor", 32.41, 12.3)
+            List<BeaconEntity> beaconList = List.of(
+                new BeaconEntity("beacon Moxxie", 23.24, 32.23, "FF:00:CC:CC:EE:DD"),
+                new BeaconEntity("beacon Loona", 64.23, 32.23, "11:00:00:88:AA:AA")
             );
             beaconRepository.saveAll(beaconList);
         };
