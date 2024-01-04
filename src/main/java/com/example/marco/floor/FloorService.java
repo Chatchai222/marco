@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marco.buildingdirectory.BuildingDirectoryRepository;
 import com.example.marco.floorplan.FloorPlanRepository;
 
 @Service
@@ -13,11 +14,15 @@ public class FloorService {
     
     private final FloorRepository floorRepository;
     private final FloorPlanRepository floorPlanRepository;
+    private final BuildingDirectoryRepository buildingDirectoryRepository;
 
     @Autowired
-    public FloorService(FloorRepository inFloorRepository, FloorPlanRepository inFloorPlanRepository){
+    public FloorService(FloorRepository inFloorRepository,
+                        FloorPlanRepository inFloorPlanRepository,
+                        BuildingDirectoryRepository inBuildingDirectoryRepository){
         this.floorRepository = inFloorRepository;
         this.floorPlanRepository = inFloorPlanRepository;
+        this.buildingDirectoryRepository = inBuildingDirectoryRepository;
     }
 
     public List<FloorEntity> getAllFloorEntity(){
@@ -72,6 +77,8 @@ public class FloorService {
 
     public void deleteFloorEntityByFloorId(Long inFloorId) throws Exception{
         this.floorPlanRepository.deleteByFloorId(inFloorId);
+        this.buildingDirectoryRepository.deleteByFloorId(inFloorId);
+
         this.floorRepository.deleteById(inFloorId);
     }
 
