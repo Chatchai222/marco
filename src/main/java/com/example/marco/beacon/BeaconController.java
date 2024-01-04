@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,6 +31,23 @@ public class BeaconController {
     @GetMapping("/{beaconId}")
     public BeaconEntity getBeaconEntityByBeaconId(@PathVariable("beaconId") Long inBeaconId) throws Exception{
         return this.beaconService.getBeaconEntityByBeaconId(inBeaconId);
+    }
+
+    @PostMapping
+    public BeaconEntity addBeaconEntity(@RequestBody BeaconEntity inBeaconEntity) throws Exception{
+        return this.beaconService.addBeaconEntity(inBeaconEntity);
+    }
+
+    @PutMapping("/{beaconId}")
+    public BeaconEntity resertBeaconEntity(@PathVariable("beaconId") Long inBeaconId,
+                                           @RequestBody BeaconEntity inBeaconEntity) throws Exception{
+        inBeaconEntity.setBeaconId(inBeaconId);
+        return this.beaconService.resertBeaconEntity(inBeaconEntity);
+    }
+
+    @DeleteMapping("/{beaconId}")
+    public void deleteBeaconEntityByBeaconId(@PathVariable("beaconId") Long inBeaconId){
+        this.beaconService.deleteBeaconEntityByBeaconId(inBeaconId);
     }
 
 }
