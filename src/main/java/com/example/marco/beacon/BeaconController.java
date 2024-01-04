@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/beacon")
+@RequestMapping("api/v1/beacons")
 public class BeaconController {
     
     final private BeaconService beaconService;
