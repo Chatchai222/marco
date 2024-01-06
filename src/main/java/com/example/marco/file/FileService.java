@@ -23,40 +23,45 @@ public class FileService {
         this.floorPlanRepository = inFloorPlanRepository;
     }
 
-    public void save(MultipartFile file) throws IOException {
+    public FileEntity addFileEntity(MultipartFile file) throws IOException {
         FileEntity fileEntity = new FileEntity();
         fileEntity.setName(StringUtils.cleanPath(file.getOriginalFilename()));
         fileEntity.setContentType(file.getContentType());
         fileEntity.setData(file.getBytes());
         fileEntity.setSize(file.getSize());
 
-        fileRepository.save(fileEntity);
+        return fileRepository.save(fileEntity);
     }
 
-    public Optional<FileEntity> getFile(Long id){
+    public Optional<FileEntity> getFileEntityById(Long id){
         return fileRepository.findById(id);
     }
 
-    public List<FileEntity> getAllFiles(){
+    public List<FileEntity> getAllFileEntities(){
         return fileRepository.findAll();
     }
 
-    public void replace(Long id, MultipartFile file) throws IOException {
+    public FileEntity upsertFileEntity(Long id, MultipartFile file) throws IOException {
+        FileEntity fileEntity = null;
         Optional<FileEntity> fileEntityOption = fileRepository.findById(id);
-        if(!fileEntityOption.isPresent()){
-            throw new IOException();
+
+        if(fileEntityOption.isEmpty()){
+            fileEntity = new FileEntity();
+        } else {
+            fileEntity = fileEntityOption.get();
         }
-        FileEntity fileEntity = fileEntityOption.get();
+        
         fileEntity.setName(StringUtils.cleanPath(file.getOriginalFilename()));
         fileEntity.setContentType(file.getContentType());
         fileEntity.setData(file.getBytes());
         fileEntity.setSize(file.getSize());
 
-        fileRepository.save(fileEntity);
+        return fileRepository.save(fileEntity);
     }
 
-    public void deleteFile(Long inFileId){
-        this.fileRepository.deleteById(inFileId);
+    public void deleteFileByFileId(Long inFileId){
         this.floorPlanRepository.deleteByFileId(inFileId);
+
+        this.fileRepository.deleteById(inFileId);
     }
 }
