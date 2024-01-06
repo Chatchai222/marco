@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.marco.buildingdirectory.BuildingDirectoryRepository;
+import com.example.marco.floorbeacon.FloorBeaconRepository;
 import com.example.marco.floorlocation.FloorLocationRepository;
 import com.example.marco.floorplan.FloorPlanRepository;
 
@@ -17,16 +18,19 @@ public class FloorService {
     private final FloorPlanRepository floorPlanRepository;
     private final BuildingDirectoryRepository buildingDirectoryRepository;
     private final FloorLocationRepository floorLocationRepository;
+    private final FloorBeaconRepository floorBeaconRepository;
 
     @Autowired
     public FloorService(FloorRepository inFloorRepository,
                         FloorPlanRepository inFloorPlanRepository,
                         BuildingDirectoryRepository inBuildingDirectoryRepository,
-                        FloorLocationRepository inFloorLocationRepository){
+                        FloorLocationRepository inFloorLocationRepository,
+                        FloorBeaconRepository inFloorBeaconRepository){
         this.floorRepository = inFloorRepository;
         this.floorPlanRepository = inFloorPlanRepository;
         this.buildingDirectoryRepository = inBuildingDirectoryRepository;
         this.floorLocationRepository = inFloorLocationRepository;
+        this.floorBeaconRepository = inFloorBeaconRepository;
     }
 
     public List<FloorEntity> getAllFloorEntity(){
@@ -83,6 +87,7 @@ public class FloorService {
         this.floorPlanRepository.deleteByFloorId(inFloorId);
         this.buildingDirectoryRepository.deleteByFloorId(inFloorId);
         this.floorLocationRepository.deleteByFloorId(inFloorId);
+        this.floorBeaconRepository.deleteByFloorId(inFloorId);
 
         this.floorRepository.deleteById(inFloorId);
     }

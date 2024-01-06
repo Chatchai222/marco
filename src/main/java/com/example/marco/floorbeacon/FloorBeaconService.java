@@ -56,7 +56,7 @@ public class FloorBeaconService {
             entityToSave = optEntity.get();
             entityToSave.setFloorId(inFloorBeaconEntity.getFloorId());
         }
-        return this.floorBeaconRepository.save(inFloorBeaconEntity);
+        return this.floorBeaconRepository.save(entityToSave);
     }
 
     public FloorBeaconEntity getFloorBeaconEntityByBeaconId(Long inBeaconId) throws Exception{
