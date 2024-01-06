@@ -13,8 +13,10 @@ public class BeaconConfig {
     public CommandLineRunner BeaconCommandLineRunner(BeaconRepository beaconRepository){
         return args -> {
             List<BeaconEntity> beaconList = List.of(
-                new BeaconEntity("beacon Moxxie", 23.24, 32.23, "FF:00:CC:CC:EE:DD"),
-                new BeaconEntity("beacon Loona", 64.23, 32.23, "11:00:00:88:AA:AA")
+                new BeaconEntity(1L, "beaconECC811", 23.24, 32.23, "AA:AA:AA:AA:AA:AA"),
+                new BeaconEntity(2L, "beaconECC810", 64.23, 32.23, "BB:BB:BB:BB:BB:BB"),
+                new BeaconEntity(3L, "beaconHM306", 45.23, 23.23, "CC:CC:CC:CC:CC:CC"),
+                new BeaconEntity(4L, "beaconHM307", 45.23, 23.23, "DD:DD:DD:DD:DD:DD")
             );
             beaconRepository.saveAll(beaconList);
         };
