@@ -6,14 +6,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marco.floorbeacon.FloorBeaconRepository;
+
 @Service
 public class BeaconService {
     
     final private BeaconRepository beaconRepository;
+    final private FloorBeaconRepository floorBeaconRepository;
     
     @Autowired
-    public BeaconService(BeaconRepository beaconRepository){
-        this.beaconRepository = beaconRepository;
+    public BeaconService(BeaconRepository inBeaconRepository, FloorBeaconRepository inFloorBeaconRepository){
+        this.beaconRepository = inBeaconRepository;
+        this.floorBeaconRepository = inFloorBeaconRepository;
     }
     
     public List<BeaconEntity> getAllBeaconEntities(){
@@ -73,7 +77,9 @@ public class BeaconService {
     }
 
     public void deleteBeaconEntityByBeaconId(Long inBeaconId){
+        this.floorBeaconRepository.deleteByBeaconId(inBeaconId);
         this.beaconRepository.deleteById(inBeaconId);
+        
     }
 
     public BeaconEntity getBeaconEntityByMacAddress(String inMacAddress) throws Exception{
@@ -85,6 +91,12 @@ public class BeaconService {
     }
 
     public void deleteBeaconEntityByMacAddress(String inMacAddress){
+        try {
+            BeaconEntity beaconEntity = getBeaconEntityByMacAddress(inMacAddress);
+            this.floorBeaconRepository.deleteByBeaconId(beaconEntity.getBeaconId());
+        } catch (Exception e) {
+            ;
+        }
         this.beaconRepository.deleteByMacAddress(inMacAddress);
     }
 }
