@@ -6,15 +6,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marco.floorlocation.FloorLocationRepository;
+
 
 @Service
 public class LocationService {
 
     private final LocationRepository locationRepository;
+    private final FloorLocationRepository floorLocationRepository;
     
     @Autowired
-    public LocationService(LocationRepository inLocationRepository){
+    public LocationService(LocationRepository inLocationRepository, FloorLocationRepository inFloorLocationRepository){
         this.locationRepository = inLocationRepository;
+        this.floorLocationRepository = inFloorLocationRepository;
     }
 
     public List<LocationEntity> getAllLocationEntity(){
@@ -62,6 +66,8 @@ public class LocationService {
     }
 
     public void deleteLocationEntityByLocationId(Long inLocationId){
+        this.floorLocationRepository.deleteByLocationId(inLocationId);
+
         this.locationRepository.deleteById(inLocationId);
     }
 

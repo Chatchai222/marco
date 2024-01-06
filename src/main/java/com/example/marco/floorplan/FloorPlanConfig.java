@@ -10,7 +10,7 @@ public class FloorPlanConfig {
     @Bean
     CommandLineRunner floorPlanCommandLineRunner(FloorPlanService floorPlanService){
         return args -> {
-
+            
         };
     }
 }
