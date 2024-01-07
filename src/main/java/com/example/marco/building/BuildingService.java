@@ -6,18 +6,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.marco.buildingdirectory.BuildingDirectoryRepository;
+import com.example.marco.buildingdirectory.BuildingFloorRepository;
 
 @Service
 public class BuildingService {
     
     private BuildingRepository buildingRepository;
-    private BuildingDirectoryRepository buildingDirectoryRepository;
+    private BuildingFloorRepository buildingFloorRepository;
     
     @Autowired
-    public BuildingService(BuildingRepository inBuildingRepository, BuildingDirectoryRepository inBuildingDirectoryRepository){
+    public BuildingService(BuildingRepository inBuildingRepository, BuildingFloorRepository inBuildingFloorRepository){
         this.buildingRepository = inBuildingRepository;
-        this.buildingDirectoryRepository = inBuildingDirectoryRepository;
+        this.buildingFloorRepository = inBuildingFloorRepository;
     }
 
     public List<BuildingEntity> getAllBuildingEntity(){
@@ -53,6 +53,6 @@ public class BuildingService {
 
     public void deleteBuildingEntityById(Long id) throws Exception { 
         this.buildingRepository.deleteById(id);
-        this.buildingDirectoryRepository.deleteByBuildingId(id);
+        this.buildingFloorRepository.deleteByBuildingId(id);
     }
 }

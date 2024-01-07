@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface BuildingDirectoryRepository extends JpaRepository<BuildingDirectoryEntity, Long>{
+public interface BuildingFloorRepository extends JpaRepository<BuildingFloorEntity, Long>{
     
-    List<BuildingDirectoryEntity> findByBuildingId(Long inBuildingId);
+    List<BuildingFloorEntity> findByBuildingId(Long inBuildingId);
     void deleteByBuildingId(Long inBuildingId);
 
-    Optional<BuildingDirectoryEntity> findByFloorId(Long inFloorId);
+    Optional<BuildingFloorEntity> findByFloorId(Long inFloorId);
     void deleteByFloorId(Long inFloorId); 
 
-    Optional<BuildingDirectoryEntity> findByBuildingIdAndFloorId(Long inBuildingId, Long inFloorId);
+    Optional<BuildingFloorEntity> findByBuildingIdAndFloorId(Long inBuildingId, Long inFloorId);
 }

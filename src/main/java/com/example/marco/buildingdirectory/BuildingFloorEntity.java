@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class BuildingDirectoryEntity {
+public class BuildingFloorEntity {
     
     @Id
     @SequenceGenerator(
@@ -22,7 +22,7 @@ public class BuildingDirectoryEntity {
         strategy = GenerationType.SEQUENCE,
         generator = "buildingSequence"
     )
-    private Long buildingDirectoryId;
+    private Long buildingFloorId;
 
     @Column(nullable = false)
     private Long buildingId;
@@ -30,27 +30,27 @@ public class BuildingDirectoryEntity {
     @Column(unique = true, nullable = false)
     private Long floorId;
 
-    public BuildingDirectoryEntity() {
+    public BuildingFloorEntity() {
         
     }
 
-    public BuildingDirectoryEntity(Long buildingId, Long floorId) {
+    public BuildingFloorEntity(Long buildingId, Long floorId) {
         this.buildingId = buildingId;
         this.floorId = floorId;
     }
 
-    public BuildingDirectoryEntity(Long buildingDirectoryId, Long buildingId, Long floorId) {
-        this.buildingDirectoryId = buildingDirectoryId;
+    public BuildingFloorEntity(Long buildingDirectoryId, Long buildingId, Long floorId) {
+        this.buildingFloorId = buildingDirectoryId;
         this.buildingId = buildingId;
         this.floorId = floorId;
     }
 
-    public Long getBuildingDirectoryId() {
-        return buildingDirectoryId;
+    public Long getBuildingFloorId() {
+        return buildingFloorId;
     }
 
-    public void setBuildingDirectoryId(Long buildingDirectoryId) {
-        this.buildingDirectoryId = buildingDirectoryId;
+    public void setBuildingFloorId(Long buildingDirectoryId) {
+        this.buildingFloorId = buildingDirectoryId;
     }
 
     public Long getBuildingId() {
