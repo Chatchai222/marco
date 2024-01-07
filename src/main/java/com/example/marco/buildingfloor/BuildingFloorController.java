@@ -1,4 +1,4 @@
-package com.example.marco.buildingdirectory;
+package com.example.marco.buildingfloor;
 
 import java.util.List;
 
