@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,6 +41,17 @@ public class FilesController {
                           
     }
 
+
+    @GetMapping("/{id}")
+    public FileResponse getFileResponseByFileId(@PathVariable("id") Long inFileId) throws Exception{
+        Optional<FileEntity> entityOpt = this.fileService.getFileEntityById(inFileId);
+        if(entityOpt.isEmpty()){
+            throw new Exception("File with fileId: " + inFileId + " does not exist");
+        }
+        FileResponse response = this.mapToFileResponse(entityOpt.get());
+        return response;
+    }
+    /* Would like to use, but for time crunch and conformity purpose must return internal server error 2024 Jan 7
     @GetMapping("/{id}")
     public ResponseEntity<FileResponse> getFileResponseByFileId(@PathVariable("id") Long inFileId){
         Optional<FileEntity> entityOpt = this.fileService.getFileEntityById(inFileId);
@@ -52,6 +62,7 @@ public class FilesController {
         FileResponse responseToSend = this.mapToFileResponse(fileEntity);
         return new ResponseEntity<FileResponse>(responseToSend, HttpStatus.OK);
     }
+    */
 
     @GetMapping("/download/{id}")
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable Long id){
