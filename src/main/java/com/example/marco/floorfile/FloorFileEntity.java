@@ -1,4 +1,4 @@
-package com.example.marco.floorplan;
+package com.example.marco.floorfile;
 
 
 import jakarta.persistence.Column;
@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class FloorPlanEntity {
+public class FloorFileEntity {
 
     @Id
     @SequenceGenerator(
@@ -23,7 +23,7 @@ public class FloorPlanEntity {
         strategy = GenerationType.SEQUENCE,
         generator = "floorSequence"
     )
-    private Long floorPlanId;
+    private Long floorFileId;
     
     @Column(unique = true)
     private Long floorId;
@@ -31,27 +31,27 @@ public class FloorPlanEntity {
     @Column(unique = true)
     private Long fileId;
 
-    public FloorPlanEntity() {
-
+    public FloorFileEntity() {
+        
     }
 
-    public FloorPlanEntity(Long floorId, Long fileId) {
+    public FloorFileEntity(Long floorId, Long fileId) {
         this.floorId = floorId;
         this.fileId = fileId;
     }
 
-    public FloorPlanEntity(Long floorPlanId, Long floorId, Long fileId) {
-        this.floorPlanId = floorPlanId;
+    public FloorFileEntity(Long floorFileId, Long floorId, Long fileId) {
+        this.floorFileId = floorFileId;
         this.floorId = floorId;
         this.fileId = fileId;
     }
 
-    public Long getFloorPlanId() {
-        return floorPlanId;
+    public Long getFloorFileId() {
+        return floorFileId;
     }
 
-    public void setFloorPlanId(Long floorPlanId) {
-        this.floorPlanId = floorPlanId;
+    public void setFloorFileId(Long floorFileId) {
+        this.floorFileId = floorFileId;
     }
 
     public Long getFloorId() {
@@ -72,6 +72,7 @@ public class FloorPlanEntity {
 
     @Override
     public String toString() {
-        return "FloorPlanEntity [floorPlanId=" + floorPlanId + ", floorId=" + floorId + ", fileId=" + fileId + "]";
+        return "FloorFileEntity [floorFileId=" + floorFileId + ", floorId=" + floorId + ", fileId=" + fileId + "]";
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.marco.floorplan;
+package com.example.marco.floorfile;
 
 import java.util.Optional;
 
@@ -8,11 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface FloorPlanRepository extends JpaRepository<FloorPlanEntity, Long> {
+public interface FloorFileRepository extends JpaRepository<FloorFileEntity, Long> {
     
-    Optional<FloorPlanEntity> findByFloorId(Long inFloorId);
+    Optional<FloorFileEntity> findByFloorId(Long inFloorId);
     Boolean existsByFloorId(Long inFloorId);
     void deleteByFloorId(Long inFloorId);
 
+    Optional<FloorFileEntity> findByFileId(Long inFileId);
     void deleteByFileId(Long inFileId);
 }
