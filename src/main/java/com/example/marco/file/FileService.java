@@ -9,15 +9,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.marco.floorfile.FloorFileRepository;
+
 
 @Service
 public class FileService {
     
     private final FileRepository fileRepository;
+    private final FloorFileRepository floorFileRepository;
 
     @Autowired
-    public FileService(FileRepository inFileRepository){
+    public FileService(FileRepository inFileRepository, FloorFileRepository inFloorFileRepository){
         this.fileRepository = inFileRepository;
+        this.floorFileRepository = inFloorFileRepository;
     }
 
     public FileEntity addFileEntity(MultipartFile file) throws IOException {
@@ -57,6 +61,8 @@ public class FileService {
     }
 
     public void deleteFileByFileId(Long inFileId){
+        this.floorFileRepository.deleteByFileId(inFileId);
+
         this.fileRepository.deleteById(inFileId);
     }
 }
