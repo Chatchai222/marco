@@ -28,8 +28,8 @@ public class FloorBeaconController {
     }
 
     @PutMapping
-    public FloorBeaconEntity upsertFloorBeaconEntity(@RequestBody FloorBeaconEntity inFloorBeaconEntity) throws Exception{
-        return this.floorBeaconService.upsertFloorBeaconEntity(inFloorBeaconEntity);
+    public FloorBeaconEntity insertFloorBeaconEntity(@RequestBody FloorBeaconEntity inFloorBeaconEntity) throws Exception{
+        return this.floorBeaconService.insertFloorBeaconEntity(inFloorBeaconEntity);
     }
 
     @GetMapping("/floorId/{floorId}")

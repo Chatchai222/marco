@@ -29,34 +29,25 @@ public class FloorBeaconService {
         return this.floorBeaconRepository.findAll();
     }
 
-    public FloorBeaconEntity upsertFloorBeaconEntity(FloorBeaconEntity inFloorBeaconEntity) throws Exception{
+    public FloorBeaconEntity insertFloorBeaconEntity(FloorBeaconEntity inFloorBeaconEntity) throws Exception{
         if(inFloorBeaconEntity.getFloorBeaconId() != null){
-            throw new Exception("upsertFloorBeaconEntity error: Cannot have explicit floorBeaconId: " + floorBeaconRepository);
+            throw new Exception("insertFloorBeaconEntity error: Cannot have explicit floorBeaconId: " + floorBeaconRepository);
         }
         if(inFloorBeaconEntity.getFloorId() == null){
-            throw new Exception("upsertFloorBeaconEntity error: floorId is null");
+            throw new Exception("insertFloorBeaconEntity error: floorId is null");
         }
         if(inFloorBeaconEntity.getBeaconId() == null){
-            throw new Exception("upsertFloorBeaconEntity error: beaconId is null");
+            throw new Exception("insertFloorBeaconEntity error: beaconId is null");
         }
 
         if(!this.floorRepository.existsById(inFloorBeaconEntity.getFloorId())){
-            throw new Exception("upsertFloorBeaconEntity error; FloorEntity with floorId: " + inFloorBeaconEntity.getFloorId() + " does not exist");
+            throw new Exception("insertFloorBeaconEntity error; FloorEntity with floorId: " + inFloorBeaconEntity.getFloorId() + " does not exist");
         }
         if(!this.beaconRepository.existsById(inFloorBeaconEntity.getBeaconId())){
-            throw new Exception("upsertFloorBeaconEntity error: BeaconEntity with beaconId: " + inFloorBeaconEntity.getFloorId() + " does not exist");
+            throw new Exception("insertFloorBeaconEntity error: BeaconEntity with beaconId: " + inFloorBeaconEntity.getFloorId() + " does not exist");
         }
         
-        // This part is f***ed up but it works
-        Optional<FloorBeaconEntity> optEntity = this.floorBeaconRepository.findByBeaconId(inFloorBeaconEntity.getBeaconId());
-        FloorBeaconEntity entityToSave = null;
-        if(optEntity.isEmpty()){ // insert new entity
-            entityToSave = inFloorBeaconEntity;
-        } else { // update old entity
-            entityToSave = optEntity.get();
-            entityToSave.setFloorId(inFloorBeaconEntity.getFloorId());
-        }
-        return this.floorBeaconRepository.save(entityToSave);
+        return this.floorBeaconRepository.save(inFloorBeaconEntity);
     }
 
     public FloorBeaconEntity getFloorBeaconEntityByBeaconId(Long inBeaconId) throws Exception{
