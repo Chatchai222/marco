@@ -1,11 +1,14 @@
 package com.example.marco.file;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,6 +59,24 @@ public class FileService {
         fileEntity.setContentType(file.getContentType());
         fileEntity.setData(file.getBytes());
         fileEntity.setSize(file.getSize());
+
+        return fileRepository.save(fileEntity);
+    }
+
+    public FileEntity upsertFileEntity(Long id, File file) throws IOException{
+        FileEntity fileEntity = null;
+        Optional<FileEntity> fileEntityOption = fileRepository.findById(id);
+
+        if(fileEntityOption.isEmpty()){
+            fileEntity = new FileEntity();
+        } else {
+            fileEntity = fileEntityOption.get();
+        }
+
+        fileEntity.setName(StringUtils.cleanPath(file.getName()));
+        fileEntity.setContentType(URLConnection.guessContentTypeFromName(file.getName()));
+        fileEntity.setData(FileCopyUtils.copyToByteArray(file));
+        fileEntity.setSize(file.length());
 
         return fileRepository.save(fileEntity);
     }
