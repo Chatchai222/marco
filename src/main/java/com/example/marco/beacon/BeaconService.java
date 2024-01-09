@@ -6,74 +6,97 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marco.floorbeacon.FloorBeaconRepository;
+
 @Service
 public class BeaconService {
     
     final private BeaconRepository beaconRepository;
+    final private FloorBeaconRepository floorBeaconRepository;
     
     @Autowired
-    public BeaconService(BeaconRepository beaconRepository){
-        this.beaconRepository = beaconRepository;
+    public BeaconService(BeaconRepository inBeaconRepository, FloorBeaconRepository inFloorBeaconRepository){
+        this.beaconRepository = inBeaconRepository;
+        this.floorBeaconRepository = inFloorBeaconRepository;
     }
     
-    public List<Beacon> getAllBeacon(){
+    public List<BeaconEntity> getAllBeaconEntities(){
         return this.beaconRepository.findAll();
     }
 
-    public Beacon getBeaconById(Long beaconId){
-        Optional<Beacon> beaconOpt = this.beaconRepository.findById(beaconId);
-        if (!beaconOpt.isPresent()){
-            throw new IllegalStateException("Beacon with id: " + beaconId + " does not exist");
+    public BeaconEntity getBeaconEntityByBeaconId(Long inBeaconId) throws Exception{
+        Optional<BeaconEntity> optBeacon = this.beaconRepository.findById(inBeaconId);
+        if(optBeacon.isEmpty()){
+            throw new Exception("getBeaconEntityByBeaconId errro: BeaconEntity with beaconId: " + inBeaconId + " does not exist");
         }
-        return beaconOpt.get();
+        return optBeacon.get();
     }
 
-    public Beacon getBeaconByMacAddress(String macAddress){
-        Optional<Beacon> beaconOpt = this.beaconRepository.findByMacAddress(macAddress);
-        if (!beaconOpt.isPresent()){
-            throw new IllegalStateException("Beacon with mac address: " + macAddress + " does not exist");
+    public BeaconEntity addBeaconEntity(BeaconEntity inBeaconEntity) throws Exception{
+        if(inBeaconEntity.getBeaconId() != null){
+            throw new Exception("addBeaconEntity error: BeaconEntity cannot have explicit beaconId: " + inBeaconEntity.getBeaconId());
         }
-        return beaconOpt.get();
+        if(inBeaconEntity.getName() == null){
+            throw new Exception("addBeaconEntity error: name is null");
+        }
+        if(inBeaconEntity.getGeoX() == null){
+            throw new Exception("addBeaconEntity error: geoX is null");
+        }
+        if(inBeaconEntity.getGeoY() == null){
+            throw new Exception("addBeaconEntity error: geoY is null");
+        }
+        if(inBeaconEntity.getMacAddress() == null){
+            throw new Exception("addBeaconEntity error: macAddress is null");
+        }
+
+        Optional<BeaconEntity> optBeacon = this.beaconRepository.findByMacAddress(inBeaconEntity.getMacAddress());
+        if(optBeacon.isPresent()){
+            throw new Exception("addBeaconEntity error: beacon with macAddress: " + inBeaconEntity.getMacAddress() + " already exist");
+        }
+        return this.beaconRepository.save(inBeaconEntity);
     }
 
-    public void addBeacon(Beacon beacon){
-        if(beacon.isAnyNonIdAttributeNull()){
-            throw new IllegalStateException("Cannot add beacon, the following attribute " + beacon.getNullAttributes() + " is null");
+    public BeaconEntity resertBeaconEntity(BeaconEntity inBeaconEntity) throws Exception{
+        if(inBeaconEntity.getBeaconId() == null){
+            throw new Exception("replaceBeaconEntity error: beaconId is null");
         }
-
-        Optional<Beacon> beaconOpt = this.beaconRepository.findByMacAddress(beacon.getMacAddress());
-        if(beaconOpt.isPresent()){
-            throw new IllegalStateException("beacon with mac address " + beacon.getMacAddress() + " already exists");
+        if(inBeaconEntity.getName() == null){
+            throw new Exception("replaceBeaconEntity error: name is null");
         }
-        this.beaconRepository.save(beacon);
+        if(inBeaconEntity.getGeoX() == null){
+            throw new Exception("replaceBeaconEntity error: geoX is null");
+        }
+        if(inBeaconEntity.getGeoY() == null){
+            throw new Exception("replaceBeaconEntity error: geoY is null");
+        }
+        if(inBeaconEntity.getMacAddress() == null){
+            throw new Exception("replaceBeaconEntity error: macAddress is null");
+        }
+        
+        return this.beaconRepository.save(inBeaconEntity);
     }
 
-    public void deleteBeaconById(Long beaconId) {
-        Boolean exists = this.beaconRepository.existsById(beaconId);
-        if(!exists){
-            throw new IllegalStateException("beacon with id " + beaconId + " does not exist");
-        }
-        this.beaconRepository.deleteById(beaconId);
+    public void deleteBeaconEntityByBeaconId(Long inBeaconId){
+        this.floorBeaconRepository.deleteByBeaconId(inBeaconId);
+        this.beaconRepository.deleteById(inBeaconId);
+        
     }
 
-    public void deleteBeaconByMacAddress(String macAddress) {
-        Optional<Beacon> beaconOpt = this.beaconRepository.findByMacAddress(macAddress);
-        if(!beaconOpt.isPresent()){
-            throw new IllegalStateException("beacon with mac address " + macAddress + " does not exist");
+    public BeaconEntity getBeaconEntityByMacAddress(String inMacAddress) throws Exception{
+        Optional<BeaconEntity> optBeacon = this.beaconRepository.findByMacAddress(inMacAddress);
+        if(optBeacon.isEmpty()){
+            throw new Exception("replaceBeaconEntity error: BeaconEntity with macAddress: " + inMacAddress + " does not exist");
         }
-        Beacon beacon = beaconOpt.get();
-        this.beaconRepository.deleteById(beacon.getId());
+        return optBeacon.get();
     }
 
-    public void replaceBeacon(Beacon inBeacon) {
-        if(inBeacon.isAnyAttributeNull()){
-            throw new IllegalStateException("beacon replacement is missing " + inBeacon.getNullAttributes() + " attributes");
+    public void deleteBeaconEntityByMacAddress(String inMacAddress){
+        try {
+            BeaconEntity beaconEntity = getBeaconEntityByMacAddress(inMacAddress);
+            this.floorBeaconRepository.deleteByBeaconId(beaconEntity.getBeaconId());
+        } catch (Exception e) {
+            ;
         }
-        Optional<Beacon> beaconOpt = this.beaconRepository.findById(inBeacon.getId());
-        if(!beaconOpt.isPresent()){
-            throw new IllegalStateException("beacon with id " + inBeacon.getId() + " does not exist");
-        }
-        this.beaconRepository.save(inBeacon);
+        this.beaconRepository.deleteByMacAddress(inMacAddress);
     }
-
 }

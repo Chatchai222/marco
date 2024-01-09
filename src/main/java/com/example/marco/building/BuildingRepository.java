@@ -1,9 +1,9 @@
-package com.example.marco.location;
- 
+package com.example.marco.building;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LocationRepository extends JpaRepository<LocationEntity, Long>{
+public interface BuildingRepository extends JpaRepository<BuildingEntity, Long> {
     
 }

@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class Floor {
+public class FloorEntity {
 
     @Id
     @SequenceGenerator(
@@ -21,37 +21,37 @@ public class Floor {
         strategy = GenerationType.SEQUENCE,
         generator = "floorSequence"
     )
-    private Long id;
+    private Long floorId;
     private String name;
-    private Double length;
-    private Double width;
+    private Double geoLength;
+    private Double geoWidth;
     private Double azimuth;
 
-    public Floor() {
+    public FloorEntity() {
 
     }
 
-    public Floor(String name, Double length, Double width, Double azimuth) {
+    public FloorEntity(String name, Double geoLength, Double geoWidth, Double azimuth) {
         this.name = name;
-        this.length = length;
-        this.width = width;
+        this.geoLength = geoLength;
+        this.geoWidth = geoWidth;
         this.azimuth = azimuth;
     }
 
-    public Floor(Long id, String name, Double length, Double width, Double azimuth) {
-        this.id = id;
+    public FloorEntity(Long floorId, String name, Double geoLength, Double geoWidth, Double azimuth) {
+        this.floorId = floorId;
         this.name = name;
-        this.length = length;
-        this.width = width;
+        this.geoLength = geoLength;
+        this.geoWidth = geoWidth;
         this.azimuth = azimuth;
     }
 
-    public Long getId() {
-        return id;
+    public Long getFloorId() {
+        return floorId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFloorId(Long floorId) {
+        this.floorId = floorId;
     }
 
     public String getName() {
@@ -62,20 +62,20 @@ public class Floor {
         this.name = name;
     }
 
-    public Double getLength() {
-        return length;
+    public Double getGeoLength() {
+        return geoLength;
     }
 
-    public void setLength(Double length) {
-        this.length = length;
+    public void setGeoLength(Double geoLength) {
+        this.geoLength = geoLength;
     }
 
-    public Double getWidth() {
-        return width;
+    public Double getGeoWidth() {
+        return geoWidth;
     }
 
-    public void setWidth(Double width) {
-        this.width = width;
+    public void setGeoWidth(Double geoWidth) {
+        this.geoWidth = geoWidth;
     }
 
     public Double getAzimuth() {
@@ -85,11 +85,11 @@ public class Floor {
     public void setAzimuth(Double azimuth) {
         this.azimuth = azimuth;
     }
-   
+
     @Override
     public String toString() {
-        return "Floor [id=" + id + ", name=" + name + ", length=" + length + ", width=" + width + ", aziumuth="
-                + azimuth + "]";
+        return "FloorEntity [floorId=" + floorId + ", name=" + name + ", geoLength=" + geoLength + ", geoWidth=" + geoWidth
+                + ", azimuth=" + azimuth + "]";
     }
     
 }

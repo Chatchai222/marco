@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1/location")
+@RequestMapping(path = "api/v1/locations")
 public class LocationController {
 
     private final LocationService locationService;
@@ -23,28 +23,29 @@ public class LocationController {
         this.locationService = inLocationService;
     }
 
-    @GetMapping("all")
-    public List<Location> getAllLocation() {
-        return locationService.getAllLocation();
+    @GetMapping
+    public List<LocationEntity> getAllLocation() {
+        return locationService.getAllLocationEntity();
     }
 
-    @GetMapping("id")
-    public Location getLocationById(@RequestParam(name = "id") Long locationId){
-        return locationService.getLocationById(locationId);
+    @GetMapping("/{locationId}")
+    public LocationEntity getLocationById(@PathVariable("locationId") Long inLocationId) throws Exception{
+        return locationService.getLocationEntityByLocationId(inLocationId);
     }
 
     @PostMapping
-    public void addLocation(@RequestBody Location location){
-        locationService.addLocation(location);
-    }
-    
-    @DeleteMapping("id")
-    public void deleteLocationById(@RequestParam(name = "id") Long locationId){
-        locationService.deleteLocationById(locationId);
+    public LocationEntity addLocation(@RequestBody LocationEntity location) throws Exception{
+        return locationService.addLocationEntity(location);
     }
 
-    @PutMapping
-    public void replaceLocation(@RequestBody Location location){
-        locationService.replaceLocation(location);
+    @PutMapping("/{locationId}")
+    public LocationEntity replaceLocation(@PathVariable("locationId") Long inLocationId, @RequestBody LocationEntity inLocationEntity) throws Exception{
+        inLocationEntity.setLocationId(inLocationId);
+        return locationService.replaceLocationEntity(inLocationEntity);
+    }
+    
+    @DeleteMapping("/{locationId}")
+    public void deleteLocationById(@PathVariable("locationId") Long locationId) throws Exception{
+        locationService.deleteLocationEntityByLocationId(locationId);
     }
 }

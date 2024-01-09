@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/beacon")
+@RequestMapping("api/v1/beacons")
 public class BeaconController {
     
     final private BeaconService beaconService;
@@ -23,39 +23,40 @@ public class BeaconController {
         this.beaconService = beaconService;
     }
 
-    @GetMapping("all")
-    public List<Beacon> getAllBeacon(){
-        return this.beaconService.getAllBeacon();
+    @GetMapping
+    public List<BeaconEntity> getAllBeaconEntities(){
+        return this.beaconService.getAllBeaconEntities();
     }
 
-    @GetMapping("id")
-    public Beacon getBeaconById(@RequestParam(name = "id") Long beaconId){
-        return this.beaconService.getBeaconById(beaconId);
-    }
-
-    @GetMapping("macAddress")
-    public Beacon getBeaconByMacAddress(@RequestParam(name = "macAddress") String macAddress){
-        return this.beaconService.getBeaconByMacAddress(macAddress);
+    @GetMapping("/{beaconId}")
+    public BeaconEntity getBeaconEntityByBeaconId(@PathVariable("beaconId") Long inBeaconId) throws Exception{
+        return this.beaconService.getBeaconEntityByBeaconId(inBeaconId);
     }
 
     @PostMapping
-    public void addBeacon(@RequestBody Beacon beacon){
-        this.beaconService.addBeacon(beacon);
+    public BeaconEntity addBeaconEntity(@RequestBody BeaconEntity inBeaconEntity) throws Exception{
+        return this.beaconService.addBeaconEntity(inBeaconEntity);
     }
 
-    @DeleteMapping("id")
-    public void deleteBeaconById(@RequestParam(name = "id") Long beaconId){
-        this.beaconService.deleteBeaconById(beaconId);
+    @PutMapping("/{beaconId}")
+    public BeaconEntity resertBeaconEntity(@PathVariable("beaconId") Long inBeaconId,
+                                           @RequestBody BeaconEntity inBeaconEntity) throws Exception{
+        inBeaconEntity.setBeaconId(inBeaconId);
+        return this.beaconService.resertBeaconEntity(inBeaconEntity);
     }
 
-    @DeleteMapping("macAddress")
-    public void deleteBeaconByMacAddress(@RequestParam(name = "macAddress") String macAddress){
-        this.beaconService.deleteBeaconByMacAddress(macAddress);
+    @DeleteMapping("/{beaconId}")
+    public void deleteBeaconEntityByBeaconId(@PathVariable("beaconId") Long inBeaconId){
+        this.beaconService.deleteBeaconEntityByBeaconId(inBeaconId);
     }
 
-    @PutMapping
-    public void replaceLocation(@RequestBody Beacon beacon){
-        this.beaconService.replaceBeacon(beacon);
+    @GetMapping("/macAddress/{macAddress}")
+    public BeaconEntity getBeaconEntityByMacAddress(@PathVariable("macAddress") String inMacAddress) throws Exception{
+        return this.beaconService.getBeaconEntityByMacAddress(inMacAddress);
     }
 
+    @DeleteMapping("/macAddress/{macAddress}")
+    public void deleteBeaconEntityByMacAddress(@PathVariable("macAddress") String inMacAddress){
+        this.beaconService.deleteBeaconEntityByMacAddress(inMacAddress);
+    }
 }

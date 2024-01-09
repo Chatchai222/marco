@@ -6,49 +6,69 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marco.floorlocation.FloorLocationRepository;
+
 
 @Service
 public class LocationService {
 
     private final LocationRepository locationRepository;
+    private final FloorLocationRepository floorLocationRepository;
     
     @Autowired
-    public LocationService(LocationRepository inLocationRepository){
+    public LocationService(LocationRepository inLocationRepository, FloorLocationRepository inFloorLocationRepository){
         this.locationRepository = inLocationRepository;
+        this.floorLocationRepository = inFloorLocationRepository;
     }
 
-    public List<Location> getAllLocation(){
+    public List<LocationEntity> getAllLocationEntity(){
         return this.locationRepository.findAll();
     }
 
-    public Location getLocationById(Long locationId){
-        Optional<Location> locationOpt = this.locationRepository.findById(locationId);
-        if (!locationOpt.isPresent()){
-            throw new IllegalStateException("Location with id: " + locationId + " does not exist");
+    public LocationEntity getLocationEntityByLocationId(Long inLocationId) throws Exception{
+        Optional<LocationEntity> locationOpt = this.locationRepository.findById(inLocationId);
+        if(locationOpt.isEmpty()){
+            throw new Exception("getLocationEntityByLocationId error: LocationEntity with locationId: " + inLocationId + " does not exist");
         }
         return locationOpt.get();
     }
 
-    public void addLocation(Location location) {
-        this.locationRepository.save(location);
+    public LocationEntity addLocationEntity(LocationEntity inLocationEntity) throws Exception{
+        if(inLocationEntity.getLocationId() != null){
+            throw new Exception("addLocationEntity error: LocationEntity cannot have explicit locationId");
+        }
+        if(inLocationEntity.getName() == null){
+            throw new Exception("addLocationEntity error: LocationEntity.name is null");
+        }
+        if(inLocationEntity.getGeoX() == null){
+            throw new Exception("addLocationEntity error: LocationEntity.geoX is null");
+        }
+        if(inLocationEntity.getGeoY() == null){
+            throw new Exception("addLocationEntity error: LocationEntity.geoY is null");
+        }
+        return this.locationRepository.save(inLocationEntity);
     }
 
-    public void deleteLocationById(Long locationId){
-        boolean locationExist = this.locationRepository.existsById(locationId);
-        if (!locationExist){
-            throw new IllegalStateException("Location with id: " + locationId + " does not exist");
+    public LocationEntity replaceLocationEntity(LocationEntity inLocationEntity) throws Exception{
+        if(inLocationEntity.getLocationId() == null){
+            throw new Exception("replaceLocationEntity error: LocationEntity.locationId is null");
         }
-        this.locationRepository.deleteById(locationId);
+        if(inLocationEntity.getName() == null){
+            throw new Exception("replaceLocationEntity error: LocationEntity.name is null");
+        }
+        if(inLocationEntity.getGeoX() == null){
+            throw new Exception("replaceLocationEntity error: LocationEntity.geoX is null");
+        }
+        if(inLocationEntity.getGeoY() == null){
+            throw new Exception("replaceLocationEntity error: LocationEntity.geoY is null");
+        }
+        return this.locationRepository.save(inLocationEntity);
     }
 
-    public void replaceLocation(Location inLocation){
-        if(inLocation.getId() == null){
-            throw new IllegalStateException("Id of location cannot be null");
-        }
-        if(!this.locationRepository.existsById(inLocation.getId())){
-            throw new IllegalStateException("Id of location " + inLocation.getId() + " does not exist");
-        }
-        this.locationRepository.save(inLocation);
+    public void deleteLocationEntityByLocationId(Long inLocationId){
+        this.floorLocationRepository.deleteByLocationId(inLocationId);
+
+        this.locationRepository.deleteById(inLocationId);
     }
 
 }

@@ -36,6 +36,13 @@ public class FileEntity {
 
     }
 
+    public FileEntity(String name, String contentType, Long size, byte[] data) {
+        this.name = name;
+        this.contentType = contentType;
+        this.size = size;
+        this.data = data;
+    }
+
     public Long getId() {
         return id;
     }

@@ -6,44 +6,90 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.marco.buildingfloor.BuildingFloorRepository;
+import com.example.marco.floorbeacon.FloorBeaconRepository;
+import com.example.marco.floorfile.FloorFileRepository;
+import com.example.marco.floorlocation.FloorLocationRepository;
+
 @Service
 public class FloorService {
     
     private final FloorRepository floorRepository;
+    private final BuildingFloorRepository buildingFloorRepository;
+    private final FloorLocationRepository floorLocationRepository;
+    private final FloorBeaconRepository floorBeaconRepository;
+    private final FloorFileRepository floorFileRepository;
 
     @Autowired
-    public FloorService(FloorRepository inFloorRepository){
+    public FloorService(FloorRepository inFloorRepository,
+                        BuildingFloorRepository inBuildingFloorRepository,
+                        FloorLocationRepository inFloorLocationRepository,
+                        FloorBeaconRepository inFloorBeaconRepository,
+                        FloorFileRepository inFloorFileRepository){
         this.floorRepository = inFloorRepository;
+        this.buildingFloorRepository = inBuildingFloorRepository;
+        this.floorLocationRepository = inFloorLocationRepository;
+        this.floorBeaconRepository = inFloorBeaconRepository;
+        this.floorFileRepository = inFloorFileRepository;
     }
 
-    public List<Floor> getAllFloor(){
+    public List<FloorEntity> getAllFloorEntity(){
         return this.floorRepository.findAll();
     }
 
-    public Floor getFloorById(Long floorId){
-        Optional<Floor> floorOpt = this.floorRepository.findById(floorId);
-        if (!floorOpt.isPresent()){
-            throw new IllegalStateException("Floor with id:" + floorId + " does not exist");
+    public FloorEntity getFloorEntityByFloorId(Long inFloorId) throws Exception{
+        Optional<FloorEntity> floorOpt = this.floorRepository.findById(inFloorId);
+        if(floorOpt.isEmpty()){
+            throw new Exception("Floor with id:" + inFloorId + " does not exist");
         }
         return floorOpt.get();
     }
 
-    public void addFloor(Floor floor) {
-        this.floorRepository.save(floor);
+    public FloorEntity addFloorEntity(FloorEntity inFloorEntity) throws Exception{
+        if(inFloorEntity.getFloorId() != null){
+            throw new Exception("addFloorEntity error: FloorEntity cannot have explicit floorId: " + inFloorEntity.getFloorId());
+        }
+        if(inFloorEntity.getName() == null){
+            throw new Exception("addFloorEntity error: FloorEntity.name is null");
+        }
+        if(inFloorEntity.getGeoLength() == null){
+            throw new Exception("addFloorEntity error: FloorEntity.geoLength is null");
+        }
+        if(inFloorEntity.getGeoWidth() == null){
+            throw new Exception("addFloorEntity error: FloorEntity.geoWidth is null");
+        }
+        if(inFloorEntity.getAzimuth() == null){
+            throw new Exception("addFloorEntity error: FloorEntity.azimuth is null");
+        }
+        return this.floorRepository.save(inFloorEntity);
     }
 
-    public void replaceFloor(Floor floor) {
-        if(floor.getId() == null){
-            throw new IllegalStateException("Error: Floor with id:" + floor.getId() + " does not exist");
+    public FloorEntity replaceFloorEntity(FloorEntity inFloorEntity) throws Exception{
+        if(inFloorEntity.getFloorId() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.floorId is null");
         }
-        this.floorRepository.save(floor);
+        if(inFloorEntity.getName() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.name is null");
+        }
+        if(inFloorEntity.getGeoLength() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.geoLength is null");
+        }
+        if(inFloorEntity.getGeoWidth() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.geoWidth is null");
+        }
+        if(inFloorEntity.getAzimuth() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.azimuth is null");
+        }
+        return this.floorRepository.save(inFloorEntity);
     }
 
-    public void deleteFloorById(Long floorId){
-        if(!floorRepository.existsById(floorId)){
-            throw new IllegalStateException("Error: Floor with id: " + floorId + " does not exist");
-        }
-        this.floorRepository.deleteById(floorId);
+    public void deleteFloorEntityByFloorId(Long inFloorId) throws Exception{
+        this.buildingFloorRepository.deleteByFloorId(inFloorId);
+        this.floorLocationRepository.deleteByFloorId(inFloorId);
+        this.floorBeaconRepository.deleteByFloorId(inFloorId);
+        this.floorFileRepository.deleteByFloorId(inFloorId);
+
+        this.floorRepository.deleteById(inFloorId);
     }
 
 }

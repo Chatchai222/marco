@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,16 +34,39 @@ public class FilesController {
 
     @GetMapping
     public List<FileResponse> list() {
-        return fileService.getAllFiles()
+        return fileService.getAllFileEntities()
                           .stream()
                           .map(this::mapToFileResponse)
                           .collect(Collectors.toList());
                           
     }
 
-    @GetMapping("download/{id}")
+
+    @GetMapping("/{id}")
+    public FileResponse getFileResponseByFileId(@PathVariable("id") Long inFileId) throws Exception{
+        Optional<FileEntity> entityOpt = this.fileService.getFileEntityById(inFileId);
+        if(entityOpt.isEmpty()){
+            throw new Exception("File with fileId: " + inFileId + " does not exist");
+        }
+        FileResponse response = this.mapToFileResponse(entityOpt.get());
+        return response;
+    }
+    /* Would like to use, but for time crunch and conformity purpose must return internal server error 2024 Jan 7
+    @GetMapping("/{id}")
+    public ResponseEntity<FileResponse> getFileResponseByFileId(@PathVariable("id") Long inFileId){
+        Optional<FileEntity> entityOpt = this.fileService.getFileEntityById(inFileId);
+        if(entityOpt.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        FileEntity fileEntity = entityOpt.get();
+        FileResponse responseToSend = this.mapToFileResponse(fileEntity);
+        return new ResponseEntity<FileResponse>(responseToSend, HttpStatus.OK);
+    }
+    */
+
+    @GetMapping("/download/{id}")
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable Long id){
-        Optional<FileEntity> fileEntityOptional = fileService.getFile(id);
+        Optional<FileEntity> fileEntityOptional = fileService.getFileEntityById(id);
 
         if(!fileEntityOptional.isPresent()){
             return ResponseEntity.notFound().build();
@@ -58,9 +80,9 @@ public class FilesController {
 
     }
     
-    @GetMapping("view/{id}")
+    @GetMapping("/view/{id}")
     public ResponseEntity<InputStreamResource> viewFile(@PathVariable Long id) {
-        Optional<FileEntity> fileEntityOptional = fileService.getFile(id);
+        Optional<FileEntity> fileEntityOptional = fileService.getFileEntityById(id);
 
         if(!fileEntityOptional.isPresent()){
             return ResponseEntity.notFound().build();
@@ -74,15 +96,30 @@ public class FilesController {
     }
 
     @PostMapping
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
+    public FileResponse upload(@RequestParam("file") MultipartFile inFile) throws Exception{
         try {
-            fileService.save(file);
-            return ResponseEntity.status(HttpStatus.OK)
-                                 .body(String.format("File uploaded sucessfully: %s", file.getOriginalFilename()));
+            FileEntity fileEntity = fileService.addFileEntity(inFile);
+            FileResponse fileResponse = this.mapToFileResponse(fileEntity);
+            return fileResponse;
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body(String.format("Could not upload the file: %s", file.getOriginalFilename()));
+            throw new Exception("Error failed to upload file: ");
         }
+    }
+    
+    @PutMapping("/{id}")
+    public FileResponse replaceUpload(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id) throws Exception{
+        try {
+            FileEntity fileEntity = fileService.upsertFileEntity(id, file);
+            FileResponse fileResponse = this.mapToFileResponse(fileEntity);
+            return fileResponse;
+        } catch (Exception e) {
+            throw new Exception("Error failed to replace file");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteFile(@PathVariable("id") Long id){
+        this.fileService.deleteFileByFileId(id);
     }
 
     private FileResponse mapToFileResponse(FileEntity fileEntity){
@@ -105,30 +142,6 @@ public class FilesController {
         fileResponse.setViewUrl(viewUrl);
 
         return fileResponse;
-    }
-    
-    @PutMapping("{id}")
-    public ResponseEntity<String> replaceUpload(@RequestParam("file") MultipartFile file, @PathVariable Long id){
-        try {
-            fileService.replace(id, file);
-            return ResponseEntity.status(HttpStatus.OK)
-                                 .body(String.format("File replaced sucessfully: %s", file.getOriginalFilename()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body(String.format("Could not replace the file: %s", file.getOriginalFilename()));
-        }
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteFile(@PathVariable Long id){
-        try {
-            fileService.deleteFile(id);
-            return ResponseEntity.status(HttpStatus.OK)
-                                 .body(String.format("File deleted successfully, id: %d", id));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body(String.format("Could not delete file, id: %d", id));
-        }
     }
 
 }
