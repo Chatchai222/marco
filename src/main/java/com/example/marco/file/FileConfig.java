@@ -24,11 +24,11 @@ public class FileConfig {
     public CommandLineRunner fileCommandLineRunner(FileService fileService){
         return args -> {
             logger.info("hello from file config using slf4j simple logging facade for java");
-            File jesseFile = resourceLoader.getResource("classpath:jesse-pinkman.png").getFile();
-            fileService.upsertFileEntity(1L, jesseFile);
+            // File jesseFile = resourceLoader.getResource("classpath:jesse-pinkman.png").getFile();
+            // fileService.upsertFileEntity(1L, jesseFile);
 
-            File spyFile = resourceLoader.getResource("classpath:static/spy.png").getFile();
-            fileService.upsertFileEntity(2L, spyFile);
+            // File spyFile = resourceLoader.getResource("classpath:static/spy.png").getFile();
+            // fileService.upsertFileEntity(2L, spyFile);
         };
     }
 }
