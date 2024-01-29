@@ -83,9 +83,9 @@ public class HardcodeConfig {
             
             ResourceLoader resourceLoader = new DefaultResourceLoader();
             File ecc7thResource = resourceLoader.getResource("classpath:static/ecc7thfloor-cropped-to-floor.png").getFile();
-            FileEntity ecc7thFileEntity = fileService.upsertFileEntity(1L, ecc7thResource);
+            FileEntity ecc7thFileEntity = fileService.addFileEntity(ecc7thResource);
             File ecc8thResource = resourceLoader.getResource("classpath:static/ecc8thfloor-cropped-to-floor.png").getFile();
-            FileEntity ecc8thFileEntity = fileService.upsertFileEntity(2L, ecc8thResource);
+            FileEntity ecc8thFileEntity = fileService.addFileEntity(ecc8thResource);
 
             
         };
