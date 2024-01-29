@@ -37,6 +37,16 @@ public class FileService {
         return fileRepository.save(fileEntity);
     }
 
+    public FileEntity addFileEntity(File file) throws IOException{
+        FileEntity fileEntity = new FileEntity();
+        fileEntity.setName(StringUtils.cleanPath(file.getName()));
+        fileEntity.setContentType(URLConnection.guessContentTypeFromName(file.getName()));
+        fileEntity.setData(FileCopyUtils.copyToByteArray(file));
+        fileEntity.setSize(file.length());
+
+        return fileRepository.save(fileEntity);
+    }
+
     public Optional<FileEntity> getFileEntityById(Long id){
         return fileRepository.findById(id);
     }
