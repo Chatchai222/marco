@@ -13,13 +13,16 @@ import com.example.marco.beacon.BeaconEntity;
 import com.example.marco.beacon.BeaconService;
 import com.example.marco.building.BuildingEntity;
 import com.example.marco.building.BuildingService;
+import com.example.marco.buildingfloor.BuildingFloorEntity;
 import com.example.marco.buildingfloor.BuildingFloorService;
 import com.example.marco.file.FileEntity;
 import com.example.marco.file.FileService;
 import com.example.marco.floor.FloorEntity;
 import com.example.marco.floor.FloorService;
 import com.example.marco.floorbeacon.FloorBeaconService;
+import com.example.marco.floorfile.FloorFileEntity;
 import com.example.marco.floorfile.FloorFileService;
+import com.example.marco.floorlocation.FloorLocationEntity;
 import com.example.marco.floorlocation.FloorLocationService;
 import com.example.marco.location.LocationEntity;
 import com.example.marco.location.LocationService;
@@ -87,7 +90,18 @@ public class HardcodeConfig {
             File ecc8thResource = resourceLoader.getResource("classpath:static/ecc8thfloor-cropped-to-floor.png").getFile();
             FileEntity ecc8thFileEntity = fileService.addFileEntity(ecc8thResource);
 
+            buildingFloorService.upsertBuildingDirectoryEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc7thFloor.getFloorId()));
+            buildingFloorService.upsertBuildingDirectoryEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc8thFloor.getFloorId()));
             
+            for(LocationEntity location: ecc7thLocationList){
+                floorLocationService.upsertFloorLocationEntity(new FloorLocationEntity(ecc7thFloor.getFloorId(), location.getLocationId()));
+            }
+            for(LocationEntity location: ecc8thLocationList){
+                floorLocationService.upsertFloorLocationEntity(new FloorLocationEntity(ecc8thFloor.getFloorId(), location.getLocationId()));
+            }
+
+            floorFileService.insertFloorFileEntity(new FloorFileEntity(ecc7thFloor.getFloorId(), ecc7thFileEntity.getId()));
+            floorFileService.insertFloorFileEntity(new FloorFileEntity(ecc8thFloor.getFloorId(), ecc8thFileEntity.getId()));
         };
     }
     
