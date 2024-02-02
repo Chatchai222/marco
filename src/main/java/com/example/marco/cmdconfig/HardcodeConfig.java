@@ -43,8 +43,8 @@ public class HardcodeConfig {
         return args -> {
             BuildingEntity eccBuilding = buildingService.addBuildingEntity(new BuildingEntity("ECC building"));
             
-            FloorEntity ecc7thFloor = floorService.addFloorEntity(new FloorEntity("ECC 7th floor", 39.6, 73.6, 999.99));
-            FloorEntity ecc8thFloor = floorService.addFloorEntity(new FloorEntity("ECC 8th floor", 37.4, 73.4, 999.99));
+            FloorEntity ecc7thFloor = floorService.addFloorEntity(new FloorEntity("ECC 7th floor", 39.6, 73.6, 270.00));
+            FloorEntity ecc8thFloor = floorService.addFloorEntity(new FloorEntity("ECC 8th floor", 37.4, 73.4, 270.00));
 
             List<LocationEntity> ecc7thLocationList = List.of(
                 locationService.addLocationEntity(new LocationEntity("ECC7-Back-Left-Toilet-Door", 15.20, 12.40)),
