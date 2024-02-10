@@ -101,8 +101,8 @@ public class HardcodeConfig {
             File ecc8thResource = resourceLoader.getResource("classpath:static/ecc8thfloor-cropped-to-floor.png").getFile();
             FileEntity ecc8thFileEntity = fileService.addFileEntity(ecc8thResource);
 
-            buildingFloorService.upsertBuildingDirectoryEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc7thFloor.getFloorId()));
-            buildingFloorService.upsertBuildingDirectoryEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc8thFloor.getFloorId()));
+            buildingFloorService.addBuildingFloorEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc7thFloor.getFloorId()));
+            buildingFloorService.addBuildingFloorEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc8thFloor.getFloorId()));
             
             for(LocationEntity location: ecc7thLocationList){
                 floorLocationService.upsertFloorLocationEntity(new FloorLocationEntity(ecc7thFloor.getFloorId(), location.getLocationId()));

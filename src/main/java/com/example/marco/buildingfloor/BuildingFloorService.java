@@ -29,22 +29,22 @@ public class BuildingFloorService {
         return this.buildingFloorRepository.findAll();
     }
 
-    public BuildingFloorEntity upsertBuildingDirectoryEntity(BuildingFloorEntity inBuildingFloorEntity) throws Exception{
+    public BuildingFloorEntity addBuildingFloorEntity(BuildingFloorEntity inBuildingFloorEntity) throws Exception{
         if(inBuildingFloorEntity.getBuildingFloorId() != null){
-            throw new Exception("upsertBuildingFloorEntity error: Cannot have explicit buildingFloorId: " + inBuildingFloorEntity.getBuildingFloorId());
+            throw new Exception("addBuildingFloorEntity error: Cannot have explicit buildingFloorId: " + inBuildingFloorEntity.getBuildingFloorId());
         }
         if(inBuildingFloorEntity.getBuildingId() == null){
-            throw new Exception("upsertBuildingFloorEntity error: buildingId is null");
+            throw new Exception("addBuildingFloorEntity error: buildingId is null");
         }
         if(inBuildingFloorEntity.getFloorId() == null){
-            throw new Exception("upsertBuildingFloorEntity error: floorId is null");
+            throw new Exception("addBuildingFloorEntity error: floorId is null");
         }
         
         if(!this.buildingRepository.existsById(inBuildingFloorEntity.getBuildingId())){
-            throw new Exception("upsertBuildingFloorEntity error: BuildingEntity with buildingId: " + inBuildingFloorEntity.getBuildingId() + " does not exist");
+            throw new Exception("addBuildingFloorEntity error: BuildingEntity with buildingId: " + inBuildingFloorEntity.getBuildingId() + " does not exist");
         }
         if(!this.floorRepository.existsById(inBuildingFloorEntity.getFloorId())){
-            throw new Exception("upsertBuildingFloorEntity error: FloorEntity with floorId: " + inBuildingFloorEntity.getFloorId() + " does not exist");
+            throw new Exception("addBuildingFloorEntity error: FloorEntity with floorId: " + inBuildingFloorEntity.getFloorId() + " does not exist");
         }
 
         return this.buildingFloorRepository.save(inBuildingFloorEntity);
