@@ -2,18 +2,18 @@ package com.example.marco.file;
 
 public class FileResponse {
 
-    private Long id;
+    private Long fileId;
     private String name;
     private Long size;
     private String downloadUrl;
     private String viewUrl;
     private String contentType;
 
-    public Long getId() {
-        return id;
+    public Long getFileId() {
+        return fileId;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setFileId(Long id) {
+        this.fileId = id;
     }
     public String getName() {
         return name;

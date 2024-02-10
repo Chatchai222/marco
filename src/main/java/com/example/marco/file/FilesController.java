@@ -134,7 +134,7 @@ public class FilesController {
                                                                 .build()
                                                                 .toUriString();
         FileResponse fileResponse = new FileResponse();
-        fileResponse.setId(fileEntity.getId());
+        fileResponse.setFileId(fileEntity.getId());
         fileResponse.setName(fileEntity.getName());
         fileResponse.setContentType(fileEntity.getContentType());
         fileResponse.setSize(fileEntity.getSize());
