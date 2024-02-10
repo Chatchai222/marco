@@ -80,6 +80,10 @@ public class FloorService {
         if(inFloorEntity.getAzimuth() == null){
             throw new Exception("replaceFloorEntity error: FloorEntity.azimuth is null");
         }
+
+        if(!floorRepository.existsById(inFloorEntity.getFloorId())){
+            throw new Exception("replaceFloorEntity error: FloorEntity.floorId " + inFloorEntity.getFloorId() + " does not exist");
+        }
         return this.floorRepository.save(inFloorEntity);
     }
 

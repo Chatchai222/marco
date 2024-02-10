@@ -44,9 +44,9 @@ public class FloorController {
     }
 
     @PutMapping("/{floorId}")
-    public void replaceFloor(@PathVariable("floorId") Long inFloorId, @RequestBody FloorEntity inFloorEntity) throws Exception{
+    public FloorEntity replaceFloor(@PathVariable("floorId") Long inFloorId, @RequestBody FloorEntity inFloorEntity) throws Exception{
         inFloorEntity.setFloorId(inFloorId);
-        floorService.replaceFloorEntity(inFloorEntity);
+        return floorService.replaceFloorEntity(inFloorEntity);
     }
 
     @DeleteMapping("/{floorId}")
