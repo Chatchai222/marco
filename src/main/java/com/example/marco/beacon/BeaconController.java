@@ -39,10 +39,10 @@ public class BeaconController {
     }
 
     @PutMapping("/{beaconId}")
-    public BeaconEntity resertBeaconEntity(@PathVariable("beaconId") Long inBeaconId,
+    public BeaconEntity replaceBeaconEntity(@PathVariable("beaconId") Long inBeaconId,
                                            @RequestBody BeaconEntity inBeaconEntity) throws Exception{
         inBeaconEntity.setBeaconId(inBeaconId);
-        return this.beaconService.resertBeaconEntity(inBeaconEntity);
+        return this.beaconService.replaceBeaconEntity(inBeaconEntity);
     }
 
     @DeleteMapping("/{beaconId}")

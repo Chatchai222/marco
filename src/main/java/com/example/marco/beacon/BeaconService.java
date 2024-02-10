@@ -56,7 +56,7 @@ public class BeaconService {
         return this.beaconRepository.save(inBeaconEntity);
     }
 
-    public BeaconEntity resertBeaconEntity(BeaconEntity inBeaconEntity) throws Exception{
+    public BeaconEntity replaceBeaconEntity(BeaconEntity inBeaconEntity) throws Exception{
         if(inBeaconEntity.getBeaconId() == null){
             throw new Exception("replaceBeaconEntity error: beaconId is null");
         }
