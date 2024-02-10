@@ -55,16 +55,15 @@ public class FileService {
         return fileRepository.findAll();
     }
 
-    public FileEntity upsertFileEntity(Long id, MultipartFile file) throws IOException {
+    public FileEntity replaceFileEntity(Long id, MultipartFile file) throws IOException, Exception {
         FileEntity fileEntity = null;
         Optional<FileEntity> fileEntityOption = fileRepository.findById(id);
 
         if(fileEntityOption.isEmpty()){
-            fileEntity = new FileEntity();
-        } else {
-            fileEntity = fileEntityOption.get();
+            throw new Exception("replaceFileEntity multipartfile error: fileEntity with fileId: " + id + " does not exist");
         }
-        
+
+        fileEntity = fileEntityOption.get();
         fileEntity.setName(StringUtils.cleanPath(file.getOriginalFilename()));
         fileEntity.setContentType(file.getContentType());
         fileEntity.setData(file.getBytes());
@@ -73,16 +72,15 @@ public class FileService {
         return fileRepository.save(fileEntity);
     }
 
-    public FileEntity upsertFileEntity(Long id, File file) throws IOException{
+    public FileEntity replaceFileEntity(Long id, File file) throws IOException, Exception{
         FileEntity fileEntity = null;
         Optional<FileEntity> fileEntityOption = fileRepository.findById(id);
 
         if(fileEntityOption.isEmpty()){
-            fileEntity = new FileEntity();
-        } else {
-            fileEntity = fileEntityOption.get();
-        }
+            throw new Exception("replaceFileEntity file error: fileEntity with fileId: " + id + " does not exist");
+        } 
 
+        fileEntity = fileEntityOption.get();
         fileEntity.setName(StringUtils.cleanPath(file.getName()));
         fileEntity.setContentType(URLConnection.guessContentTypeFromName(file.getName()));
         fileEntity.setData(FileCopyUtils.copyToByteArray(file));
