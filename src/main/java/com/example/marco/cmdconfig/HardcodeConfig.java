@@ -105,10 +105,10 @@ public class HardcodeConfig {
             buildingFloorService.addBuildingFloorEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc8thFloor.getFloorId()));
             
             for(LocationEntity location: ecc7thLocationList){
-                floorLocationService.upsertFloorLocationEntity(new FloorLocationEntity(ecc7thFloor.getFloorId(), location.getLocationId()));
+                floorLocationService.addFloorLocationEntity(new FloorLocationEntity(ecc7thFloor.getFloorId(), location.getLocationId()));
             }
             for(LocationEntity location: ecc8thLocationList){
-                floorLocationService.upsertFloorLocationEntity(new FloorLocationEntity(ecc8thFloor.getFloorId(), location.getLocationId()));
+                floorLocationService.addFloorLocationEntity(new FloorLocationEntity(ecc8thFloor.getFloorId(), location.getLocationId()));
             }
 
             floorFileService.insertFloorFileEntity(new FloorFileEntity(ecc7thFloor.getFloorId(), ecc7thFileEntity.getFileId()));
