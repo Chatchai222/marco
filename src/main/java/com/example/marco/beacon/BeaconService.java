@@ -56,7 +56,7 @@ public class BeaconService {
         return this.beaconRepository.save(inBeaconEntity);
     }
 
-    public BeaconEntity resertBeaconEntity(BeaconEntity inBeaconEntity) throws Exception{
+    public BeaconEntity replaceBeaconEntity(BeaconEntity inBeaconEntity) throws Exception{
         if(inBeaconEntity.getBeaconId() == null){
             throw new Exception("replaceBeaconEntity error: beaconId is null");
         }
@@ -73,13 +73,15 @@ public class BeaconService {
             throw new Exception("replaceBeaconEntity error: macAddress is null");
         }
         
+        if(!this.beaconRepository.existsById(inBeaconEntity.getBeaconId())){
+            throw new Exception("reaplceBeaconEntity error: beacon with beaconId " + inBeaconEntity.getBeaconId() + " does not exist");
+        }
         return this.beaconRepository.save(inBeaconEntity);
     }
 
     public void deleteBeaconEntityByBeaconId(Long inBeaconId){
         this.floorBeaconRepository.deleteByBeaconId(inBeaconId);
         this.beaconRepository.deleteById(inBeaconId);
-        
     }
 
     public BeaconEntity getBeaconEntityByMacAddress(String inMacAddress) throws Exception{

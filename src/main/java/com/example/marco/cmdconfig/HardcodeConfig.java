@@ -101,18 +101,18 @@ public class HardcodeConfig {
             File ecc8thResource = resourceLoader.getResource("classpath:static/ecc8thfloor-cropped-to-floor.png").getFile();
             FileEntity ecc8thFileEntity = fileService.addFileEntity(ecc8thResource);
 
-            buildingFloorService.upsertBuildingDirectoryEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc7thFloor.getFloorId()));
-            buildingFloorService.upsertBuildingDirectoryEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc8thFloor.getFloorId()));
+            buildingFloorService.addBuildingFloorEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc7thFloor.getFloorId()));
+            buildingFloorService.addBuildingFloorEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc8thFloor.getFloorId()));
             
             for(LocationEntity location: ecc7thLocationList){
-                floorLocationService.upsertFloorLocationEntity(new FloorLocationEntity(ecc7thFloor.getFloorId(), location.getLocationId()));
+                floorLocationService.addFloorLocationEntity(new FloorLocationEntity(ecc7thFloor.getFloorId(), location.getLocationId()));
             }
             for(LocationEntity location: ecc8thLocationList){
-                floorLocationService.upsertFloorLocationEntity(new FloorLocationEntity(ecc8thFloor.getFloorId(), location.getLocationId()));
+                floorLocationService.addFloorLocationEntity(new FloorLocationEntity(ecc8thFloor.getFloorId(), location.getLocationId()));
             }
 
-            floorFileService.insertFloorFileEntity(new FloorFileEntity(ecc7thFloor.getFloorId(), ecc7thFileEntity.getId()));
-            floorFileService.insertFloorFileEntity(new FloorFileEntity(ecc8thFloor.getFloorId(), ecc8thFileEntity.getId()));
+            floorFileService.insertFloorFileEntity(new FloorFileEntity(ecc7thFloor.getFloorId(), ecc7thFileEntity.getFileId()));
+            floorFileService.insertFloorFileEntity(new FloorFileEntity(ecc8thFloor.getFloorId(), ecc8thFileEntity.getFileId()));
         };
     }
     

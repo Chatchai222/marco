@@ -48,7 +48,8 @@ public class BuildingController {
 
     @PutMapping("{id}")
     public ResponseEntity<BuildingEntity> replaceBuildingEntity(@PathVariable Long id, @RequestBody BuildingEntity inBuildingEntity) throws Exception{
-        BuildingEntity retBuildingEntity = this.buildingService.replaceBuildingEntity(id, inBuildingEntity);
+        inBuildingEntity.setBuildingId(id);
+        BuildingEntity retBuildingEntity = this.buildingService.replaceBuildingEntity(inBuildingEntity);
         return ResponseEntity.ok().body(retBuildingEntity);
     }
 

@@ -62,6 +62,10 @@ public class LocationService {
         if(inLocationEntity.getGeoY() == null){
             throw new Exception("replaceLocationEntity error: LocationEntity.geoY is null");
         }
+
+        if(!locationRepository.existsById(inLocationEntity.getLocationId())){
+            throw new Exception("replaceLocationEntity error: LocationEntity with locationId: " + inLocationEntity.getLocationId() + " does not exist");
+        }
         return this.locationRepository.save(inLocationEntity);
     }
 

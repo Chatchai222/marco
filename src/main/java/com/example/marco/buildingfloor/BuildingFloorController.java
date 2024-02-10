@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,32 +23,32 @@ public class BuildingFloorController {
     }
 
     @GetMapping
-    public List<BuildingFloorEntity> getAllBuildingDirectoryEntities(){
+    public List<BuildingFloorEntity> getAllBuildingFloorEntities(){
         return this.buildingFloorService.getAllBuildingFloorEntities();
     }
 
-    @PutMapping
-    public BuildingFloorEntity upsertBuildingDirectoryEntity(@RequestBody BuildingFloorEntity inBuildingDirectoryEntity) throws Exception{
-        return this.buildingFloorService.upsertBuildingDirectoryEntity(inBuildingDirectoryEntity);
+    @PostMapping
+    public BuildingFloorEntity addBuildingFloorEntity(@RequestBody BuildingFloorEntity inBuildingDirectoryEntity) throws Exception{
+        return this.buildingFloorService.addBuildingFloorEntity(inBuildingDirectoryEntity);
     }
     
     @GetMapping("/floorId/{floorId}")
-    public BuildingFloorEntity getBuildingDirectoryEntityByFloorId(@PathVariable("floorId") Long inFloorId) throws Exception{
+    public BuildingFloorEntity getBuildingFloorEntityByFloorId(@PathVariable("floorId") Long inFloorId) throws Exception{
         return this.buildingFloorService.getBuildingFloorEntityByFloorId(inFloorId);
     }
 
     @DeleteMapping("/floorId/{floorId}")
-    public void deleteBuildingDirectoryEntityByFloorId(@PathVariable("floorId") Long inFloorId){
+    public void deleteBuildingFloorEntityByFloorId(@PathVariable("floorId") Long inFloorId){
         this.buildingFloorService.deleteBuildingFloorEntityByFloorId(inFloorId);
     }
 
     @GetMapping("/buildingId/{buildingId}")
-    public List<BuildingFloorEntity> getBuildingDirectoryEntitiesByBuildingId(@PathVariable("buildingId") Long inBuildingId) throws Exception{
+    public List<BuildingFloorEntity> getBuildingFloorEntitiesByBuildingId(@PathVariable("buildingId") Long inBuildingId) throws Exception{
         return this.buildingFloorService.getBuildingFloorEntitiesByBuildingId(inBuildingId);
     }
 
     @DeleteMapping("/buildingId/{buildingId}")
-    public void deleteBuildingDirectoryEntitiesByBuildingId(@PathVariable("buildingId") Long inBuildingId){
+    public void deleteBuildingFloorEntitiesByBuildingId(@PathVariable("buildingId") Long inBuildingId){
         this.buildingFloorService.deleteBuildingFloorEntitiesByBuildingId(inBuildingId);
     }
 

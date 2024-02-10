@@ -39,15 +39,17 @@ public class BuildingService {
         return this.buildingRepository.save(inBuildingEntity);
     }
     
-    public BuildingEntity replaceBuildingEntity(Long id, BuildingEntity inBuildingEntity) throws Exception {
-        if(!buildingRepository.existsById(id)){
-            throw new Exception("BuildingEntity with id: " + id + " does not exist");
+    public BuildingEntity replaceBuildingEntity(BuildingEntity inBuildingEntity) throws Exception {
+        if(inBuildingEntity.getBuildingId() == null){
+            throw new Exception("replaceBuildingEntity error: buildingId is null");
         }
         if(inBuildingEntity.getName() == null){
-            throw new Exception("BuildingEntity must have a name");
+            throw new Exception("replaceBuildingEntity error: name is null");
         }
 
-        inBuildingEntity.setBuildingId(id);
+        if(!buildingRepository.existsById(inBuildingEntity.getBuildingId())){
+            throw new Exception("replaceBuildingEntity error: buildingId: " + inBuildingEntity.getBuildingId() + " does not exist");
+        }
         return this.buildingRepository.save(inBuildingEntity);
     }
 

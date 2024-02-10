@@ -102,18 +102,18 @@ public class FilesController {
             FileResponse fileResponse = this.mapToFileResponse(fileEntity);
             return fileResponse;
         } catch (Exception e) {
-            throw new Exception("Error failed to upload file: ");
+            throw new Exception(e.getMessage());
         }
     }
     
     @PutMapping("/{id}")
     public FileResponse replaceUpload(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id) throws Exception{
         try {
-            FileEntity fileEntity = fileService.upsertFileEntity(id, file);
+            FileEntity fileEntity = fileService.replaceFileEntity(id, file);
             FileResponse fileResponse = this.mapToFileResponse(fileEntity);
             return fileResponse;
         } catch (Exception e) {
-            throw new Exception("Error failed to replace file");
+            throw new Exception(e.getMessage());
         }
     }
 
@@ -125,16 +125,16 @@ public class FilesController {
     private FileResponse mapToFileResponse(FileEntity fileEntity){
         String downloadURL = MvcUriComponentsBuilder.fromMethodName(FilesController.class,
                                                                     "downloadFile",
-                                                                    fileEntity.getId())
+                                                                    fileEntity.getFileId())
                                                                     .build()
                                                                     .toUriString();
         String viewUrl = MvcUriComponentsBuilder.fromMethodName(FilesController.class,
                                                                 "viewFile",
-                                                                fileEntity.getId())
+                                                                fileEntity.getFileId())
                                                                 .build()
                                                                 .toUriString();
         FileResponse fileResponse = new FileResponse();
-        fileResponse.setId(fileEntity.getId());
+        fileResponse.setFileId(fileEntity.getFileId());
         fileResponse.setName(fileEntity.getName());
         fileResponse.setContentType(fileEntity.getContentType());
         fileResponse.setSize(fileEntity.getSize());

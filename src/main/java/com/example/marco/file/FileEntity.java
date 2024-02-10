@@ -23,7 +23,7 @@ public class FileEntity {
         strategy = GenerationType.SEQUENCE,
         generator = "fileEntitySequence"
     )
-    private Long id;
+    private Long fileId;
 
     private String name;
     private String contentType;
@@ -43,12 +43,12 @@ public class FileEntity {
         this.data = data;
     }
 
-    public Long getId() {
-        return id;
+    public Long getFileId() {
+        return fileId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFileId(Long id) {
+        this.fileId = id;
     }
 
     public String getName() {

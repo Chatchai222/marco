@@ -29,34 +29,25 @@ public class FloorLocationService {
         return this.floorLocationRepository.findAll();
     }
 
-    public FloorLocationEntity upsertFloorLocationEntity(FloorLocationEntity inFloorLocationEntity) throws Exception{
+    public FloorLocationEntity addFloorLocationEntity(FloorLocationEntity inFloorLocationEntity) throws Exception{
         if(inFloorLocationEntity.getFloorLocationId() != null){
-            throw new Exception("upsertFloorLocationEntity error: Cannot have explicit floorLocationId: " + inFloorLocationEntity.getFloorLocationId());
+            throw new Exception("addFloorLocationEntity error: Cannot have explicit floorLocationId: " + inFloorLocationEntity.getFloorLocationId());
         }
         if(inFloorLocationEntity.getFloorId() == null){
-            throw new Exception("upsertFloorLocationEntity error: floorId is null");
+            throw new Exception("addFloorLocationEntity error: floorId is null");
         }
         if(inFloorLocationEntity.getLocationId() == null){
-            throw new Exception("upsertFloorLocationEntity error: locationId is null");
+            throw new Exception("addFloorLocationEntity error: locationId is null");
         }
 
         if(!this.floorRepository.existsById(inFloorLocationEntity.getFloorId())){
-            throw new Exception("upsertFloorLocationEntity error: FloorEntity with floorId: " + inFloorLocationEntity.getFloorId() + " does not exist");
+            throw new Exception("addFloorLocationEntity error: FloorEntity with floorId: " + inFloorLocationEntity.getFloorId() + " does not exist");
         }
         if(!this.locationRepository.existsById(inFloorLocationEntity.getLocationId())){
-            throw new Exception("upsertFloorLocationEntity error: LocationEntity with locationId: " + inFloorLocationEntity.getLocationId() + " does not exist");
+            throw new Exception("addFloorLocationEntity error: LocationEntity with locationId: " + inFloorLocationEntity.getLocationId() + " does not exist");
         }
 
-        // this is f***ed but it works
-        Optional<FloorLocationEntity> optEntity = this.floorLocationRepository.findByLocationId(inFloorLocationEntity.getLocationId());
-        FloorLocationEntity entityToSave = null;
-        if(optEntity.isEmpty()){ // insert new entity
-            entityToSave = inFloorLocationEntity;
-        } else { // Update an existing entity
-            entityToSave = optEntity.get();
-            entityToSave.setFloorId(inFloorLocationEntity.getFloorId());
-        }
-        return this.floorLocationRepository.save(entityToSave);
+        return this.floorLocationRepository.save(inFloorLocationEntity);
     }
 
     public FloorLocationEntity getFloorLocationEntityByLocationId(Long inLocationId) throws Exception{
