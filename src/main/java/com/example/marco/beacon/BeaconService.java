@@ -1,5 +1,6 @@
 package com.example.marco.beacon;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,18 @@ public class BeaconService {
             throw new Exception("getBeaconEntityByBeaconId errro: BeaconEntity with beaconId: " + inBeaconId + " does not exist");
         }
         return optBeacon.get();
+    }
+
+    public List<BeaconEntity> getBeaconEntitiesByBeaconIdList(List<Long> inBeaconIdList) {
+        List<BeaconEntity> beaconEntityList = new ArrayList<BeaconEntity>();
+        for(Long beaconId: inBeaconIdList){
+            Optional<BeaconEntity> optBeacon = this.beaconRepository.findById(beaconId);
+            if(optBeacon.isEmpty()){
+                continue;
+            }
+            beaconEntityList.add(optBeacon.get());
+        }
+        return beaconEntityList;
     }
 
     public BeaconEntity addBeaconEntity(BeaconEntity inBeaconEntity) throws Exception{

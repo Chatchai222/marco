@@ -1,6 +1,8 @@
 package com.example.marco.beacon;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +33,17 @@ public class BeaconController {
     @GetMapping("/{beaconId}")
     public BeaconEntity getBeaconEntityByBeaconId(@PathVariable("beaconId") Long inBeaconId) throws Exception{
         return this.beaconService.getBeaconEntityByBeaconId(inBeaconId);
+    }
+
+    @GetMapping("/beacon-id-list")
+    public List<BeaconEntity> getBeaconEntitiesByBeaconIdList(@RequestBody Map<String, Object> inJsonRequest) throws Exception{
+        List<Integer> beaconIdListInteger = (List<Integer>) inJsonRequest.get("beaconIdList");
+        List<Long> beaconIdListLong = new ArrayList<Long>();
+        for(Integer beaconIdInteger: beaconIdListInteger){
+            beaconIdListLong.add(Long.valueOf(beaconIdInteger));
+        }
+        List<BeaconEntity> beaconEntityList = this.beaconService.getBeaconEntitiesByBeaconIdList(beaconIdListLong);
+        return beaconEntityList;
     }
 
     @PostMapping
