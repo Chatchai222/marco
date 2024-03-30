@@ -46,6 +46,20 @@ public class BeaconController {
         return beaconEntityList;
     }
 
+    // this is F***ING cursed T_T BUT WE HAVE NO TIME
+    // this API is using POST but not modifying anything
+    // the reason this is here is because of Dart and Flutter not allowing GET method to have request body
+    @PostMapping("/beacon-id-list")
+    public List<BeaconEntity> getBeaconEntitiesByBeaconIdListUsingPOST(@RequestBody Map<String, Object> inJsonRequest) throws Exception{
+        List<Integer> beaconIdListInteger = (List<Integer>) inJsonRequest.get("beaconIdList");
+        List<Long> beaconIdListLong = new ArrayList<Long>();
+        for(Integer beaconIdInteger: beaconIdListInteger){
+            beaconIdListLong.add(Long.valueOf(beaconIdInteger));
+        }
+        List<BeaconEntity> beaconEntityList = this.beaconService.getBeaconEntitiesByBeaconIdList(beaconIdListLong);
+        return beaconEntityList;
+    }
+
     @PostMapping
     public BeaconEntity addBeaconEntity(@RequestBody BeaconEntity inBeaconEntity) throws Exception{
         return this.beaconService.addBeaconEntity(inBeaconEntity);
