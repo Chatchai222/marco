@@ -60,6 +60,12 @@ public class BeaconController {
         return beaconEntityList;
     }
 
+    @GetMapping("/string-query")
+    public List<BeaconEntity> queryBeaconByNameString(String name) {
+        System.out.println(name);
+        return this.beaconService.getBeaconEntitiesByBeaconName(name);
+    }
+
     @PostMapping
     public BeaconEntity addBeaconEntity(@RequestBody BeaconEntity inBeaconEntity) throws Exception{
         return this.beaconService.addBeaconEntity(inBeaconEntity);
