@@ -118,4 +118,8 @@ public class BeaconService {
         }
         this.beaconRepository.deleteByMacAddress(inMacAddress);
     }
+
+    public BeaconEntity getBeaconEntityByBeaconName(String name) {
+        return this.beaconRepository.findByName(name);
+    }
 }
