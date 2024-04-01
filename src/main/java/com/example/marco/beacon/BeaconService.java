@@ -45,6 +45,10 @@ public class BeaconService {
         return beaconEntityList;
     }
 
+    public List<BeaconEntity> getBeaconEntitiesByBeaconName(String nameString) {
+        return this.beaconRepository.findByNameContaining(nameString);
+    }
+
     public BeaconEntity addBeaconEntity(BeaconEntity inBeaconEntity) throws Exception{
         if(inBeaconEntity.getBeaconId() != null){
             throw new Exception("addBeaconEntity error: BeaconEntity cannot have explicit beaconId: " + inBeaconEntity.getBeaconId());
