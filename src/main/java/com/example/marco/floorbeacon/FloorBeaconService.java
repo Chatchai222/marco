@@ -69,4 +69,8 @@ public class FloorBeaconService {
     public void deleteFloorBeaconEntitiesByFloorId(Long inFloorId){
         this.floorBeaconRepository.deleteByFloorId(inFloorId);
     }
+
+    public List<FloorBeaconEntity> getFloorBeaconEntitiesByBeaconIdList(List<Long> beaconIdList) {
+        return this.floorBeaconRepository.findByBeaconIdIn(beaconIdList);
+    }
 }

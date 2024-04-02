@@ -14,4 +14,5 @@ public interface FloorBeaconRepository extends JpaRepository<FloorBeaconEntity, 
 
     public List<FloorBeaconEntity> findByFloorId(Long inFloorId);
     public void deleteByFloorId(Long inFloorId);
+    public List<FloorBeaconEntity> findByBeaconIdIn(List<Long> beaconIdList);
 }
