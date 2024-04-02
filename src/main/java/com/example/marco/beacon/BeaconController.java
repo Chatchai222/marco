@@ -66,6 +66,11 @@ public class BeaconController {
         return this.beaconService.getBeaconEntitiesByBeaconName(name);
     }
 
+    @GetMapping("/exact-string-query")
+    public BeaconEntity queryBeaconByExactName(String name) {
+        return this.beaconService.getBeaconEntityByBeaconName(name);
+    }
+
     @PostMapping
     public BeaconEntity addBeaconEntity(@RequestBody BeaconEntity inBeaconEntity) throws Exception{
         return this.beaconService.addBeaconEntity(inBeaconEntity);

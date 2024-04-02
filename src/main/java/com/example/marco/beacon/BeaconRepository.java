@@ -15,4 +15,6 @@ public interface BeaconRepository extends JpaRepository<BeaconEntity, Long> {
     public void deleteByMacAddress(String macAddress);
 
     public List<BeaconEntity> findByNameContaining(String name);
+
+    public BeaconEntity findByName(String name);
 }
