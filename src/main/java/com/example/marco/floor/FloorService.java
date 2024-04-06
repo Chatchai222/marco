@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.marco.buildingfloor.BuildingFloorRepository;
 import com.example.marco.floorbeacon.FloorBeaconRepository;
 import com.example.marco.floorfile.FloorFileRepository;
 import com.example.marco.floorlocation.FloorLocationRepository;
@@ -15,19 +14,16 @@ import com.example.marco.floorlocation.FloorLocationRepository;
 public class FloorService {
     
     private final FloorRepository floorRepository;
-    private final BuildingFloorRepository buildingFloorRepository;
     private final FloorLocationRepository floorLocationRepository;
     private final FloorBeaconRepository floorBeaconRepository;
     private final FloorFileRepository floorFileRepository;
 
     @Autowired
     public FloorService(FloorRepository inFloorRepository,
-                        BuildingFloorRepository inBuildingFloorRepository,
                         FloorLocationRepository inFloorLocationRepository,
                         FloorBeaconRepository inFloorBeaconRepository,
                         FloorFileRepository inFloorFileRepository){
         this.floorRepository = inFloorRepository;
-        this.buildingFloorRepository = inBuildingFloorRepository;
         this.floorLocationRepository = inFloorLocationRepository;
         this.floorBeaconRepository = inFloorBeaconRepository;
         this.floorFileRepository = inFloorFileRepository;
@@ -88,7 +84,6 @@ public class FloorService {
     }
 
     public void deleteFloorEntityByFloorId(Long inFloorId) throws Exception{
-        this.buildingFloorRepository.deleteByFloorId(inFloorId);
         this.floorLocationRepository.deleteByFloorId(inFloorId);
         this.floorBeaconRepository.deleteByFloorId(inFloorId);
         this.floorFileRepository.deleteByFloorId(inFloorId);

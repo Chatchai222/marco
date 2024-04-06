@@ -12,10 +12,6 @@ import org.springframework.core.io.ResourceLoader;
 
 import com.example.marco.beacon.BeaconEntity;
 import com.example.marco.beacon.BeaconService;
-import com.example.marco.building.BuildingEntity;
-import com.example.marco.building.BuildingService;
-import com.example.marco.buildingfloor.BuildingFloorEntity;
-import com.example.marco.buildingfloor.BuildingFloorService;
 import com.example.marco.file.FileEntity;
 import com.example.marco.file.FileService;
 import com.example.marco.floor.FloorEntity;
@@ -24,9 +20,7 @@ import com.example.marco.floorbeacon.FloorBeaconEntity;
 import com.example.marco.floorbeacon.FloorBeaconService;
 import com.example.marco.floorfile.FloorFileEntity;
 import com.example.marco.floorfile.FloorFileService;
-import com.example.marco.floorlocation.FloorLocationEntity;
 import com.example.marco.floorlocation.FloorLocationService;
-import com.example.marco.location.LocationEntity;
 import com.example.marco.location.LocationService;
 
 @Configuration
@@ -34,8 +28,6 @@ public class HardcodeConfig {
 
     @Bean
     public CommandLineRunner HardcodeCommandLineRunner(BeaconService beaconService,
-                                                       BuildingService buildingService,
-                                                       BuildingFloorService buildingFloorService,
                                                        FileService fileService,
                                                        FloorService floorService,
                                                        FloorBeaconService floorBeaconService,
@@ -43,7 +35,6 @@ public class HardcodeConfig {
                                                        FloorLocationService floorLocationService,
                                                        LocationService locationService){
         return args -> {
-            BuildingEntity eccBuilding = buildingService.addBuildingEntity(new BuildingEntity("ECC building"));
             
             FloorEntity ecc7thFloor = floorService.addFloorEntity(new FloorEntity("ECC 7th floor", 39.6, 73.6, 270.00));
             FloorEntity ecc8thFloor = floorService.addFloorEntity(new FloorEntity("ECC 8th floor", 37.4, 73.4, 270.00));
@@ -167,11 +158,7 @@ public class HardcodeConfig {
             File ecc8thResource = resourceLoader.getResource("classpath:static/ecc8thfloor-cropped-to-floor.png").getFile();
             FileEntity ecc8thFileEntity = fileService.addFileEntity(ecc8thResource);
 
-            buildingFloorService.addBuildingFloorEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc7thFloor.getFloorId()));
-            buildingFloorService.addBuildingFloorEntity(new BuildingFloorEntity(eccBuilding.getBuildingId(), ecc8thFloor.getFloorId()));
             
-
-
             floorFileService.insertFloorFileEntity(new FloorFileEntity(ecc7thFloor.getFloorId(), ecc7thFileEntity.getFileId()));
             floorFileService.insertFloorFileEntity(new FloorFileEntity(ecc8thFloor.getFloorId(), ecc8thFileEntity.getFileId()));
         };
