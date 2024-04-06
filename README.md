@@ -20,5 +20,13 @@ Stop the service
 sudo systemctl stop marco
 ```
 
+## To deploy something
+1. Push code to marco repository at "main" branch
+2. SSH into marco@marco.cooldev.win
+3. cd into folder "marco"
+4. sudo systemctl stop marco
+5. git fetch origin
+6. git merge origin/main
+7. sudo systemctl start marco
 
 
