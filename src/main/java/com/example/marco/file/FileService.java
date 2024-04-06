@@ -1,10 +1,16 @@
 package com.example.marco.file;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Optional;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,6 +118,14 @@ public class FileService {
         this.floorFileRepository.deleteByFileId(inFileId);
 
         this.fileRepository.deleteById(inFileId);
+    }
+
+    public ImageDimension getImageDimensionOfFileEntity(FileEntity inFileEntity) throws IOException{
+        // A cursed way to obtain dimension for fileEntity (which is file metadata and transient data)
+        InputStream inputStream = new ByteArrayInputStream(inFileEntity.getData());
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        BufferedImage image = ImageIO.read(bufferedInputStream);
+        return new ImageDimension(image.getWidth(), image.getHeight());
     }
 
     private Boolean isAllowedContentTypeImage(String inContentType){

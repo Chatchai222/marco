@@ -1,6 +1,7 @@
 package com.example.marco.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -123,16 +124,31 @@ public class FilesController {
     }
 
     private FileResponse mapToFileResponse(FileEntity fileEntity){
+        // Get the URL link for downloading the file itself
         String downloadURL = MvcUriComponentsBuilder.fromMethodName(FilesController.class,
                                                                     "downloadFile",
                                                                     fileEntity.getFileId())
                                                                     .build()
                                                                     .toUriString();
+        // Get the URL link for viewing the file in the web browser                                                                
         String viewUrl = MvcUriComponentsBuilder.fromMethodName(FilesController.class,
                                                                 "viewFile",
                                                                 fileEntity.getFileId())
                                                                 .build()
                                                                 .toUriString();
+
+        // Getting image dimension
+        Integer pixelWidth = -1;
+        Integer pixelHeight = -1;
+        try {
+            ImageDimension imageDimension = this.fileService.getImageDimensionOfFileEntity(fileEntity);
+            pixelWidth = imageDimension.getPixelWidth();
+            pixelHeight = imageDimension.getPixelHeight();
+        } catch (IOException e) {
+            
+        }
+
+        // Setting each property of fileResponse
         FileResponse fileResponse = new FileResponse();
         fileResponse.setFileId(fileEntity.getFileId());
         fileResponse.setName(fileEntity.getName());
@@ -140,6 +156,8 @@ public class FilesController {
         fileResponse.setSize(fileEntity.getSize());
         fileResponse.setDownloadUrl(downloadURL);
         fileResponse.setViewUrl(viewUrl);
+        fileResponse.setPixelWidth(pixelWidth);
+        fileResponse.setPixelHeight(pixelHeight);
 
         return fileResponse;
     }

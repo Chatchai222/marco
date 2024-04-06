@@ -8,12 +8,14 @@ public class FileResponse {
     private String downloadUrl;
     private String viewUrl;
     private String contentType;
+    private Integer pixelWidth;
+    private Integer pixelHeight;
 
     public Long getFileId() {
         return fileId;
     }
-    public void setFileId(Long id) {
-        this.fileId = id;
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
     }
     public String getName() {
         return name;
@@ -44,6 +46,18 @@ public class FileResponse {
     }
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+    public Integer getPixelWidth() {
+        return pixelWidth;
+    }
+    public void setPixelWidth(Integer pixelWidth) {
+        this.pixelWidth = pixelWidth;
+    }
+    public Integer getPixelHeight() {
+        return pixelHeight;
+    }
+    public void setPixelHeight(Integer pixelHeight) {
+        this.pixelHeight = pixelHeight;
     }
 
 }
