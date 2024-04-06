@@ -8,23 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.example.marco.floorbeacon.FloorBeaconRepository;
 import com.example.marco.floorfile.FloorFileRepository;
-import com.example.marco.floorlocation.FloorLocationRepository;
 
 @Service
 public class FloorService {
     
     private final FloorRepository floorRepository;
-    private final FloorLocationRepository floorLocationRepository;
     private final FloorBeaconRepository floorBeaconRepository;
     private final FloorFileRepository floorFileRepository;
 
     @Autowired
     public FloorService(FloorRepository inFloorRepository,
-                        FloorLocationRepository inFloorLocationRepository,
                         FloorBeaconRepository inFloorBeaconRepository,
                         FloorFileRepository inFloorFileRepository){
         this.floorRepository = inFloorRepository;
-        this.floorLocationRepository = inFloorLocationRepository;
         this.floorBeaconRepository = inFloorBeaconRepository;
         this.floorFileRepository = inFloorFileRepository;
     }
@@ -84,7 +80,6 @@ public class FloorService {
     }
 
     public void deleteFloorEntityByFloorId(Long inFloorId) throws Exception{
-        this.floorLocationRepository.deleteByFloorId(inFloorId);
         this.floorBeaconRepository.deleteByFloorId(inFloorId);
         this.floorFileRepository.deleteByFloorId(inFloorId);
 

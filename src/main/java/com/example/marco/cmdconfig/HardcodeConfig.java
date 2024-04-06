@@ -20,8 +20,6 @@ import com.example.marco.floorbeacon.FloorBeaconEntity;
 import com.example.marco.floorbeacon.FloorBeaconService;
 import com.example.marco.floorfile.FloorFileEntity;
 import com.example.marco.floorfile.FloorFileService;
-import com.example.marco.floorlocation.FloorLocationService;
-import com.example.marco.location.LocationService;
 
 @Configuration
 public class HardcodeConfig {
@@ -31,9 +29,7 @@ public class HardcodeConfig {
                                                        FileService fileService,
                                                        FloorService floorService,
                                                        FloorBeaconService floorBeaconService,
-                                                       FloorFileService floorFileService,
-                                                       FloorLocationService floorLocationService,
-                                                       LocationService locationService){
+                                                       FloorFileService floorFileService){
         return args -> {
             
             FloorEntity ecc7thFloor = floorService.addFloorEntity(new FloorEntity("ECC 7th floor", 39.6, 73.6, 270.00));
