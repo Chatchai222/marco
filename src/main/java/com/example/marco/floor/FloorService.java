@@ -53,6 +53,9 @@ public class FloorService {
         if(inFloorEntity.getAzimuth() == null){
             throw new Exception("addFloorEntity error: FloorEntity.azimuth is null");
         }
+        if(inFloorEntity.getLevel() == null){
+            throw new Exception("addFloorEntity error: FloorEntity.level is null");
+        }
         return this.floorRepository.save(inFloorEntity);
     }
 
@@ -71,6 +74,9 @@ public class FloorService {
         }
         if(inFloorEntity.getAzimuth() == null){
             throw new Exception("replaceFloorEntity error: FloorEntity.azimuth is null");
+        }
+        if(inFloorEntity.getLevel() == null){
+            throw new Exception("replaceFloorEntity error: FloorEntity.level is null");
         }
 
         if(!floorRepository.existsById(inFloorEntity.getFloorId())){

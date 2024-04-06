@@ -1,5 +1,6 @@
 package com.example.marco.floor;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,24 +27,28 @@ public class FloorEntity {
     private Double geoLength;
     private Double geoWidth;
     private Double azimuth;
+    @Column(unique = true)
+    private Integer level;
 
     public FloorEntity() {
 
     }
 
-    public FloorEntity(String name, Double geoLength, Double geoWidth, Double azimuth) {
+    public FloorEntity(String name, Double geoLength, Double geoWidth, Double azimuth, Integer level) {
         this.name = name;
         this.geoLength = geoLength;
         this.geoWidth = geoWidth;
         this.azimuth = azimuth;
+        this.level = level;
     }
 
-    public FloorEntity(Long floorId, String name, Double geoLength, Double geoWidth, Double azimuth) {
+    public FloorEntity(Long floorId, String name, Double geoLength, Double geoWidth, Double azimuth, Integer level) {
         this.floorId = floorId;
         this.name = name;
         this.geoLength = geoLength;
         this.geoWidth = geoWidth;
         this.azimuth = azimuth;
+        this.level = level;
     }
 
     public Long getFloorId() {
@@ -86,10 +91,18 @@ public class FloorEntity {
         this.azimuth = azimuth;
     }
 
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
     @Override
     public String toString() {
-        return "FloorEntity [floorId=" + floorId + ", name=" + name + ", geoLength=" + geoLength + ", geoWidth=" + geoWidth
-                + ", azimuth=" + azimuth + "]";
+        return "FloorEntity [floorId=" + floorId + ", name=" + name + ", geoLength=" + geoLength + ", geoWidth="
+                + geoWidth + ", azimuth=" + azimuth + ", level=" + level + "]";
     }
-    
+
 }
