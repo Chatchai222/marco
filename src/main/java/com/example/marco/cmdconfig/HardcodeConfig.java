@@ -108,7 +108,7 @@ public class HardcodeConfig {
                 beaconService.addBeaconEntity(new BeaconEntity("ECC805-Door", 28.40, 27.00, "D8:BC:38:FC:DF:2A")),
                 beaconService.addBeaconEntity(new BeaconEntity("ECC806-Door", 28.40, 15.00, "34:AB:95:73:5A:9A")),
                 beaconService.addBeaconEntity(new BeaconEntity("ECC807-Door", 12.10, 55.20, "D8:BC:38:FC:C5:EE")),
-                beaconService.addBeaconEntity(new BeaconEntity("ECC808-Door", 12.10, 46.60, "7C:87:CE:4A:CB:2A")),
+                beaconService.addBeaconEntity(new BeaconEntity("ECC809-Door", 12.10, 46.60, "7C:87:CE:4A:CB:2A")),
                 beaconService.addBeaconEntity(new BeaconEntity("ECC810-Door", 12.10, 34.80, "7C:87:CE:49:29:2A")),
                 beaconService.addBeaconEntity(new BeaconEntity("ECC811-Door", 12.10, 13.40, "7C:87:CE:4A:BD:76"))
             );
