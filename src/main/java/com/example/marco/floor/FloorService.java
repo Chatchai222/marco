@@ -39,24 +39,25 @@ public class FloorService {
 
     public FloorEntity addFloorEntity(FloorEntity inFloorEntity) throws Exception{
         if(inFloorEntity.getFloorId() != null){
-            throw new Exception("addFloorEntity error: FloorEntity cannot have explicit floorId: " + inFloorEntity.getFloorId());
+            throw new Exception("FloorEntity cannot have explicit floorId: " + inFloorEntity.getFloorId());
         }
         if(inFloorEntity.getName() == null){
-            throw new Exception("addFloorEntity error: FloorEntity.name is null");
+            throw new Exception("FloorEntity field name is null");
         }
         if(inFloorEntity.getGeoLength() == null){
-            throw new Exception("addFloorEntity error: FloorEntity.geoLength is null");
+            throw new Exception("FloorEntity field geoLength is null");
         }
         if(inFloorEntity.getGeoWidth() == null){
-            throw new Exception("addFloorEntity error: FloorEntity.geoWidth is null");
+            throw new Exception("FloorEntity field geoWidth is null");
         }
         if(inFloorEntity.getAzimuth() == null){
-            throw new Exception("addFloorEntity error: FloorEntity.azimuth is null");
+            throw new Exception("FloorEntity field azimuth is null");
         }
         if(inFloorEntity.getLevel() == null){
-            throw new Exception("addFloorEntity error: FloorEntity.level is null");
+            throw new Exception("FloorEntity field level is null");
         }
-        return this.floorRepository.save(inFloorEntity);
+        FloorEntity floorToReturn = this.floorRepository.save(inFloorEntity);
+        return floorToReturn;
     }
 
     public FloorEntity replaceFloorEntity(FloorEntity inFloorEntity) throws Exception{

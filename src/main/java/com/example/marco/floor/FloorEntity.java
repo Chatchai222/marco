@@ -105,4 +105,15 @@ public class FloorEntity {
                 + geoWidth + ", azimuth=" + azimuth + ", level=" + level + "]";
     }
 
+    @Override
+    public boolean equals(Object in){
+        FloorEntity inFloor = (FloorEntity)in;
+        return floorId == (inFloor.getFloorId()) &&
+               name == inFloor.getName() &&
+               geoLength.equals(inFloor.getGeoLength()) &&
+               geoWidth.equals(inFloor.getGeoWidth()) &&
+               azimuth.equals(inFloor.getAzimuth()) &&
+               level.equals(inFloor.getLevel());
+    }
+
 }
